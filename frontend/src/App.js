@@ -1,8 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TestService from './services/TestService';
 
 function App() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    TestService.testRetrieve()
+    .then(response => {
+      console.log(response.data)
+      setData(response.data)
+    })
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +30,9 @@ function App() {
         >
           Learn React
         </a>
+        {data.map(
+          d => <h3 key={d.id}>{d.name}</h3>
+        )}
       </header>
     </div>
   );
