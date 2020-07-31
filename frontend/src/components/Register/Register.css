@@ -1,0 +1,38 @@
+.formRegister {
+    position:fixed;
+    top: 38%;
+    left: 50%;
+    width:35em;
+}
+
+
+.btn {
+    float: right;
+    color: #17252a;
+}
+
+.centerRegister {
+    position:fixed;
+    height:26.5em;
+    margin-top: -7.5em;
+    margin-left: -15em;
+    padding: 10px;
+}
+
+.lineRegister {
+    top: 37%;
+    right: 0;
+    width:100%;
+    background-color: #2b7a78;
+    box-shadow: 0px 0px 10px 10px rgb(0, 0, 0, 0.4);
+}
+
+.labels {
+    color: #FEFFFF;
+}
+
+.formH2 {
+    padding-top: 5%;
+    text-align: center;
+    color: #17252a
+}
