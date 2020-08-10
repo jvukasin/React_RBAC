@@ -20,4 +20,4 @@ class Services {
     // }
 }
 
-export default new TestService()
+export default new Services()

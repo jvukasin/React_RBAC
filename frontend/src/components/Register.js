@@ -1,6 +1,5 @@
 import React from 'react'
 import {useFormik} from 'formik'
-import './Register.css'
 import *  as Yup from 'yup'
 
 export default function RegisterForm() {
@@ -71,7 +70,7 @@ export default function RegisterForm() {
                             ): null}
                         </div>
                         
-                        <button type="submit" className="btn btn-light">Log in</button>
+                        <button type="submit" style={{backgroundColor: '#f5d903'}} className="btn">Log in</button>
                     </div>
                 </form>
             </div>

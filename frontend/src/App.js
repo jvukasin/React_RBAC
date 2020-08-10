@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import LoginForm from './components/Login/Login'
-import RegisterForm from './components/Register/Register'
+import './assets/css/project.css'
+import LoginForm from './components/Login'
+import RegisterForm from './components/Register'
+import Home from './components/Home'
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 function App() {
 
@@ -16,10 +19,14 @@ function App() {
   // }, [])
 
   return (
-    <div className="container">
-      {/* <LoginForm /> */}
-      <RegisterForm />
-    </div>
+    <BrowserRouter>
+    <Switch>
+      <Route path="/home" render={props => <Home {...props} />} />
+      <Route path="/login"><LoginForm/></Route>
+      <Route path="/register"><RegisterForm/></Route>
+      <Redirect from="/" to="/home/inventory" />
+    </Switch>
+  </BrowserRouter>
   );
 }
 
