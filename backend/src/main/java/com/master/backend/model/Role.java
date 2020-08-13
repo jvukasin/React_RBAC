@@ -25,6 +25,15 @@ public class Role {
                     name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
 
+    @ManyToMany(fetch = FetchType.LAZY,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "roles_pages",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "rpages_id", referencedColumnName = "id"))
+    private Collection<RPages> pages;
+
     public Role() {
     }
 
@@ -58,5 +67,13 @@ public class Role {
 
     public void setPrivileges(Collection<Privilege> privileges) {
         this.privileges = privileges;
+    }
+
+    public Collection<RPages> getPages() {
+        return pages;
+    }
+
+    public void setPages(Collection<RPages> pages) {
+        this.pages = pages;
     }
 }

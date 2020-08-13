@@ -1,10 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import './assets/css/project.css'
-import LoginForm from './components/Login'
-import RegisterForm from './components/Register'
-import Home from './components/Home'
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import PublicRoutes from './routes/PublicRoutes';
+import PrivateRoutes from './routes/PrivateRoutes';
+import history from './util/history';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+
+const authentication = () =>
+	JSON.parse(localStorage.getItem('roles')) ? (
+		<Redirect to="/app" />
+	) : (
+		<PublicRoutes />
+	);
 
 function App() {
 
@@ -19,14 +27,18 @@ function App() {
   // }, [])
 
   return (
-    <BrowserRouter>
-    <Switch>
-      <Route path="/home" render={props => <Home {...props} />} />
-      <Route path="/login"><LoginForm/></Route>
-      <Route path="/register"><RegisterForm/></Route>
-      <Redirect from="/" to="/home/inventory" />
-    </Switch>
-  </BrowserRouter>
+    <Container fluid>
+				<Row>
+					<Col>
+						<Router history={history}>
+							<Switch>
+								<Route path="/app" component={PrivateRoutes} />
+								<Route path="" render={authentication} />
+							</Switch>
+						</Router>
+					</Col>
+				</Row>
+			</Container>
   );
 }
 

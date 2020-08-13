@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Home from "../components/Home";
 import Inventory from "../components/Inventory"
 import ProcurementForm from "../components/Procurement";
 
@@ -12,26 +11,24 @@ function AllowedActions() {
           "email": "bob@yahoo.com",
           "Pages": [
             {
-              "path": "/inventory",
-              "name": "Inventory",
+              "url": "/",
+              "title": "Inventory",
               "icon": "pe-7s-graph",
-              "component": Inventory,
-              "layout": "/home",
+              "component": "Inventory",
               "moduleId": 4,
-              "modulePageId": 11,
               "actions": [
-                // {
-                //   "actionId": 32,
-                //   "actionUrl": "capacity",
-                //   "action": "Capacity",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 33,
-                //   "actionUrl": "revenue",
-                //   "action": "Revenue",
-                //   "roleIsActive": true
-                // },
+                {
+                  "actionId": 2,
+                  "actionUrl": "create-role",
+                  "action": "Create Role",
+                  "roleIsActive": true
+                },
+                {
+                  "actionId": 2,
+                  "actionUrl": "delete-role",
+                  "action": "Delete Role",
+                  "roleIsActive": true
+                }
                 // {
                 //   "actionId": 34,
                 //   "actionUrl": "errors",
@@ -71,24 +68,24 @@ function AllowedActions() {
               ]
             },
             {
-              "path": "/procurement",
-              "name": "New Procurement",
+              "url": "/procurement",
+              "title": "New Procurement",
               "icon": "pe-7s-note2",
-              "component": ProcurementForm,
-              "layout": "/home",
+              "component": 'Procurement',
+              "moduleId": 4,
               "actions": [
-                // {
-                //   "actionId": 2,
-                //   "actionUrl": "create-role",
-                //   "action": "Create Role",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 2,
-                //   "actionUrl": "delete-role",
-                //   "action": "Delete Role",
-                //   "roleIsActive": true
-                // }
+                {
+                  "actionId": 2,
+                  "actionUrl": "create-role",
+                  "action": "Create Role",
+                  "roleIsActive": true
+                },
+                {
+                  "actionId": 2,
+                  "actionUrl": "delete-role",
+                  "action": "Delete Role",
+                  "roleIsActive": true
+                }
               ]
             }
           ]

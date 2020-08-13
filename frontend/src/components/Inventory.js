@@ -13,19 +13,23 @@ const tdArray = [
 ];
 
 class Inventory extends Component {
+
+  constructor(props) {
+    super(props)
+  }
+  
   isActionAllowed = (actionName = "") => {
-    // return (this.props.actions.indexOf(actionName) >= 0) ? true : false;
-    return true;
+    let numbb = this.props.allowedActions.map(function(a) { return a.actionUrl; }).indexOf(actionName);
+    return (numbb >= 0) ? true : false;
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="content">
         <Container fluid>
         <Row>
           <Col md={12} right>  
-          {this.isActionAllowed('create-user') &&
+          {this.isActionAllowed('create-role') &&
              <button className="btn btn-fill btn-warning float-right" type="button">Create Role</button>
            }
           </Col>
@@ -33,8 +37,8 @@ class Inventory extends Component {
           <Row>
             <Col md={12}>
               <Card
-                title="Roles"
-                category="List of the Roles"
+                title="Warehouse inventory"
+                category="List of MSc inventory"
                 ctTableFullWidth
                 ctTableResponsive
                 content={

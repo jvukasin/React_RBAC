@@ -3,7 +3,7 @@ import React from 'react'
 import *  as Yup from 'yup'
 import {useFormik} from 'formik'
 
-export default function ProcurementForm() {
+export default function Procurement() {
     const LoginValidation = Yup.object().shape({
         email: Yup
         .string()
