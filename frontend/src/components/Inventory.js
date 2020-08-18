@@ -1,21 +1,19 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Table } from "react-bootstrap";
+import DataService from "../services/Services"
 
 import Card from "../layouts/Card";
 
-const thArray = ["ID", "Name", "Edit", "Delete"];
-const tdArray = [
-    ["1", "Data Entry Person", "Edit", "Delete"],
-    ["2", "Data Specialist",  "Edit", "Delete"],
-    ["3", "Study Director",  "Edit", "Delete"],
-    ["4", "Data Manager",  "Edit", "Delete"],
-    ["5", "Monitor",  "Edit", "Delete"]
-];
+const thArray = ["ID", "Name", "Code", "Brand", "Price (eur)"];
 
 class Inventory extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      articles: []
+    }
+    this.getArticles = this.getArticles.bind(this)
   }
   
   isActionAllowed = (actionName = "") => {
@@ -23,15 +21,22 @@ class Inventory extends Component {
     return (numbb >= 0) ? true : false;
   }
 
+  componentDidMount() {
+    this.getArticles();
+  }
+
+  getArticles() {
+    DataService.getAllArticles().then(response => {
+      this.setState({ articles: response.data})
+    })
+  }
+
   render() {
     return (
-      <div className="content">
+      <div className="content contentDiv">
         <Container fluid>
         <Row>
-          <Col md={12} right>  
-          {this.isActionAllowed('create-role') &&
-             <button className="btn btn-fill btn-warning float-right" type="button">Create Role</button>
-           }
+          <Col md={12}>
           </Col>
           </Row>
           <Row>
@@ -45,21 +50,19 @@ class Inventory extends Component {
                   <Table striped hover>
                     <thead>
                       <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
+                        {thArray.map((item, index) => {
+                          return <th key={index}>{item}</th>;
                         })}
                       </tr>
                     </thead>
                     <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
-                          </tr>
-                        );
-                      })}
+                      {this.state.articles.map((item) => (
+                        <tr key={item.id}>
+                          {Object.values(item).map((val, index) => (
+                            <td key={index}>{val}</td>
+                          ))}
+                        </tr>
+                      ))}
                     </tbody>
                   </Table>
                 }

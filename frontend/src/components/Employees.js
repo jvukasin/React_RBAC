@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Container, Row, Col, Table } from "react-bootstrap";
 
 import Card from "../layouts/Card";
 
@@ -14,7 +14,7 @@ const tdArray = [
     ["5", "Monitor",  "Edit", "Delete"]
 ];
 
-class Procurement extends Component {
+class Employees extends Component {
 
     isActionAllowed = (actionName = "") => {
         let numbb = this.props.allowedActions.map(function(a) { return a.actionUrl; }).indexOf(actionName);
@@ -27,16 +27,16 @@ class Procurement extends Component {
             <Container fluid>
             <Row>
                 <Col md={12}>  
-                {this.isActionAllowed('create-procurement') &&
-                    <button className="btn custom-green-btn" type="button"><FontAwesomeIcon icon={faPlus}/> New</button>
+                {this.isActionAllowed('add-employee') &&
+                    <button className="btn custom-green-btn" type="button"><FontAwesomeIcon icon={faPlus}/>  Add employee</button>
                 }
                 </Col>
                 </Row>
                 <Row>
                 <Col md={12}>
                     <Card
-                    title="NEW NEW NEW"
-                    category="NEW"
+                    title="Employees"
+                    category="List of all the warehouse employees"
                     ctTableFullWidth
                     ctTableResponsive
                     content={
@@ -70,4 +70,4 @@ class Procurement extends Component {
     }
 }
 
-export default Procurement;
+export default Employees;

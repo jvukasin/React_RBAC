@@ -1,7 +1,7 @@
 package com.master.backend.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "react_pages")
@@ -23,17 +23,8 @@ public class RPages {
     @Column(name = "component", nullable = false)
     private String component;
 
-    @ManyToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "pages_actions",
-            joinColumns = @JoinColumn(
-                    name = "react_pages_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "react_actions_id", referencedColumnName = "id"))
-    private Collection<RActions> actions;
-
     @ManyToMany(mappedBy = "pages", fetch = FetchType.LAZY)
-    private Collection<Role> roles;
+    private List<Role> roles;
 
     public RPages() {
     }
@@ -78,19 +69,8 @@ public class RPages {
         this.component = component;
     }
 
-    public Collection<RActions> getActions() {
-        return actions;
-    }
-
-    public void setActions(Collection<RActions> actions) {
-        this.actions = actions;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
 }

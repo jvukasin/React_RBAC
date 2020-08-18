@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from '../components/Login';
 import Register from '../components/Register'
 import NotFound from '../components/NotFound';

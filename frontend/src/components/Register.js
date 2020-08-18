@@ -15,7 +15,10 @@ export default function RegisterForm() {
         .string()
         .email()
         .required('Required'),
-      password: Yup
+        username: Yup
+        .string()
+        .required('Required'),
+        password: Yup
         .string()
         .min(8)
         .matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]$", 'Password must be minimum 8 characters long and contain at least one lowercase letter, one uppercase letter and a number')
@@ -27,11 +30,12 @@ export default function RegisterForm() {
             firstName: '',
             lastName: '',
             email: '',
+            username: '',
             password: ''
         },
         validationSchema: RegistrationValidation,
-        onSubmit: ({firstName, lastName, email, password}) => {
-            alert(`FN: ${firstName}, LN: ${lastName}, email: ${email}, password: ${password}`)
+        onSubmit: ({firstName, lastName, email, username, password}) => {
+            alert(`FN: ${firstName}, LN: ${lastName}, email: ${email}, username: ${username}, password: ${password}`)
         }
     })
     return (
@@ -42,35 +46,54 @@ export default function RegisterForm() {
                     <div className="inputs">
                         <div className="form-group">
                             <label htmlFor="firstName" className="labels">First name:</label>
-                            <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.firstName} id="firstName" name="firstName" type="text"/>
-                            {touched.firstName && errors.firstName ? (
-                                <div className="error">{errors.firstName}</div>
-                            ): null}
+                            <span className="flexdisplay">
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.firstName} id="firstName" name="firstName" type="text"/>
+                                {touched.firstName && errors.firstName ? (
+                                    <div className="error">{errors.firstName}</div>
+                                ): null}
+                            </span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="lastName" className="labels">Last name:</label>
-                            <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.lastName} id="lastName" name="lastName" type="text"/>
-                            {touched.lastName && errors.lastName ? (
-                                <div className="error">{errors.lastName}</div>
-                            ): null}
+                            <span className="flexdisplay">
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.lastName} id="lastName" name="lastName" type="text"/>
+                                {touched.lastName && errors.lastName ? (
+                                    <div className="error">{errors.lastName}</div>
+                                ): null}
+                            </span>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="email" className="labels">Email:</label>
-                            <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.email} id="email" name="email" type="text"/>
-                            {touched.email && errors.email ? (
-                                <div className="error">{errors.email}</div>
-                            ): null}
+                            <span className="flexdisplay">
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.email} id="email" name="email" type="text"/>
+                                {touched.email && errors.email ? (
+                                    <div className="error">{errors.email}</div>
+                                ): null}
+                            </span>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="username" className="labels">Username:</label>
+                            <span className="flexdisplay">
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.username} id="username" name="username" type="text"/>
+                                {touched.username && errors.username ? (
+                                    <div className="error">{errors.username}</div>
+                                ): null}
+                            </span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="password" className="labels">Password:</label>
-                            <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.password} id="password" name="password" type="password"/>
-                            {touched.password && errors.password ? (
-                                <div className="error">{errors.password}</div>
-                            ): null}
+                            <span className="flexdisplay">
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.password} id="password" name="password" type="password"/>
+                                {touched.password && errors.password ? (
+                                    <div className="error">{errors.password}</div>
+                                ): null}
+                            </span>
                         </div>
                         
-                        <button type="submit" style={{backgroundColor: '#f5d903'}} className="btn">Log in</button>
+                        <div className="reg-btn">
+                            <button type="submit" className="btn custom-yellow-btn">Log in</button>
+                        </div>
                     </div>
                 </form>
             </div>

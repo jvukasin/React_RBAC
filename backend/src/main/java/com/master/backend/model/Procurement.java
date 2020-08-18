@@ -1,5 +1,7 @@
 package com.master.backend.model;
 
+import com.master.backend.enums.Enums;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -18,8 +20,9 @@ public class Procurement {
     @Column(name = "time_finished", nullable = false)
     private Date timeFinished;
 
-    @Column(name = "is_finished", nullable = false)
-    private boolean finished;
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Enums.ProcurementStatus status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Seller seller;
@@ -58,12 +61,12 @@ public class Procurement {
         this.timeFinished = timeFinished;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public Enums.ProcurementStatus getStatus() {
+        return status;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setStatus(Enums.ProcurementStatus status) {
+        this.status = status;
     }
 
     public Seller getSeller() {

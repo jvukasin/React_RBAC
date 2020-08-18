@@ -1,6 +1,3 @@
-import React, { Component } from "react";
-import Inventory from "../components/Inventory"
-import ProcurementForm from "../components/Procurement";
 
 function AllowedActions() {
     return {
@@ -29,54 +26,18 @@ function AllowedActions() {
                   "action": "Delete Role",
                   "roleIsActive": true
                 }
-                // {
-                //   "actionId": 34,
-                //   "actionUrl": "errors",
-                //   "action": "Errors",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 35,
-                //   "actionUrl": "followers",
-                //   "action": "Followers",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 36,
-                //   "actionUrl": "users_behavior",
-                //   "action": "Users Behavior",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 37,
-                //   "actionUrl": "email_statistics",
-                //   "action": "Email Statistics",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 38,
-                //   "actionUrl": "sales",
-                //   "action": "Sales",
-                //   "roleIsActive": true
-                // },
-                // {
-                //   "actionId": 39,
-                //   "actionUrl": "tasks",
-                //   "action": "Tasks",
-                //   "roleIsActive": true
-                // }
               ]
             },
             {
               "url": "/procurement",
-              "title": "New Procurement",
+              "title": "Procurement",
               "icon": "pe-7s-note2",
               "component": 'Procurement',
               "moduleId": 4,
               "actions": [
                 {
                   "actionId": 2,
-                  "actionUrl": "create-role",
+                  "actionUrl": "create-procurement",
                   "action": "Create Role",
                   "roleIsActive": true
                 },
@@ -84,6 +45,21 @@ function AllowedActions() {
                   "actionId": 2,
                   "actionUrl": "delete-role",
                   "action": "Delete Role",
+                  "roleIsActive": true
+                }
+              ]
+            },
+            {
+              "url": "/employees",
+              "title": "Employees",
+              "icon": "pe-7s-note2",
+              "component": 'Employees',
+              "moduleId": 4,
+              "actions": [
+                {
+                  "actionId": 3,
+                  "actionUrl": "add-employee",
+                  "action": "Add employee",
                   "roleIsActive": true
                 }
               ]

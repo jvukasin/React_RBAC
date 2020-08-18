@@ -2,6 +2,7 @@ package com.master.backend.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Role {
@@ -32,7 +33,16 @@ public class Role {
                     name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "rpages_id", referencedColumnName = "id"))
-    private Collection<RPages> pages;
+    private List<RPages> pages;
+
+    @ManyToMany(fetch = FetchType.LAZY,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "roles_actions",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "raction_id", referencedColumnName = "id"))
+    private List<RActions> actions;
 
     public Role() {
     }
@@ -69,11 +79,19 @@ public class Role {
         this.privileges = privileges;
     }
 
-    public Collection<RPages> getPages() {
+    public List<RPages> getPages() {
         return pages;
     }
 
-    public void setPages(Collection<RPages> pages) {
+    public void setPages(List<RPages> pages) {
         this.pages = pages;
+    }
+
+    public List<RActions> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<RActions> actions) {
+        this.actions = actions;
     }
 }

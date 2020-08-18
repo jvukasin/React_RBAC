@@ -1,9 +1,6 @@
 package com.master.backend.service;
 
-import com.master.backend.dto.TempDTO;
-import com.master.backend.model.Temp;
 import com.master.backend.repository.InventoryRepository;
-import com.master.backend.repository.TempRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

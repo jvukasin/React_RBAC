@@ -1,69 +1,59 @@
-import React, { Component, Fragment, useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { uniqBy } from 'lodash';
+import React, { Fragment, useState, useEffect } from 'react';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import * as Routes from './ComponentRoutes';
 import NotFound from '../components/NotFound';
-import routes from '../mockRoutes/routes'
 import Navigation from '../components/Navigation'
-import Inventory from '../components/Inventory'
+import UserService from '../services/UserService'
+import { Redirect } from 'react-router-dom';
+import {isLoggedIn} from '../helperFunctions/Functions'
 
-class PrivateRoutes extends Component {
+function PrivateRoutes() {
+	const match = useRouteMatch('/app');
+	const [allowedRoutes, setAllowedRoutes] = useState([]);
+	const [hasRoutes, setHasRoutes] = useState(false);
 
-	state = { allowedRoutes: [] };
+	useEffect(() => {
+		if (isLoggedIn()) {
+			UserService.getUserRoutes().then(response => {
+				if(response != null) {
+					setAllowedRoutes(response.data)
+					setHasRoutes(true);
+				}
+			})
+		}
+		else return <Redirect to="/" />;
+	}, [])
 
-	componentDidMount() {
-		/*
-      TODO: Replace hardcoded roles with redux,
-       localStorage, or get from server.
-     */
-		// let roles = JSON.parse(localStorage.getItem('roles'));
-		// if (roles) {
-		// 	roles = ['common', ...roles];
-            
-        //     //TODO ovde izvuci iz baze sve "routes" za rolu + common
-		// 	let allowedRoutes = roles.reduce((acc, role) => {
-		// 		return [...acc, ...rolesConfig[role].routes];
-		// 	}, []);
 
-		// 	// For removing duplicate entries, compare with 'url'.
-		// 	allowedRoutes = routes;
-		// 	allowedRoutes = uniqBy(allowedRoutes, 'url');
-		// 	this.setState({ allowedRoutes });
-		// } else {
-		// 	this.props.history.push('/');
-		// }
-		let allowedRoutes = routes;
-		allowedRoutes = uniqBy(allowedRoutes, 'url');
-		this.setState({ allowedRoutes });
-
-	}
-
-	render() {
+	if({hasRoutes}) {
+		return (<Fragment>
+			<Navigation routes={allowedRoutes} path={match.path} />
+			<Switch>
+				{allowedRoutes.map((route) => {
+		
+					const Component = Routes[route.component];
+					return (
+						<Route
+							exact
+							key={route.url}
+							path={`${match.path}${route.url}`}
+						>
+							<Component allowedActions={route.actions}/>
+						</Route>
+					)
+				})}
+				<Route component={NotFound} />
+			</Switch>
+		</Fragment>
+		)
+	} else {
 		return (
-			<Fragment>
-				<Navigation
-					routes={this.state.allowedRoutes}
-					path={this.props.match.path}
-				/>
-				<Switch>
-					{this.state.allowedRoutes.map((route) => {
-
-						const Component = Routes[route.component];
-						return (
-							<Route
-								exact
-								key={route.url}
-								path={`${this.props.match.path}${route.url}`}
-							>
-								<Component allowedActions={route.actions}/>
-							</Route>
-						)
-					})}
-					<Route component={NotFound} />
-				</Switch>
-			</Fragment>
-		);
+			<div style={{textAlign: 'center'}}>
+				<h1 style={{marginTop: '15%'}}>Loading...</h1>
+			</div>
+			)
 	}
+
 }
 
 export default PrivateRoutes;

@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from '../util/history';
+import AuthService from '../services/AuthService'
 
 class Navigation extends Component {
-	handleLogout = () => {
-		history.push('/');
+	constructor() {
+		super()
+
+		this.handleLogout = this.handleLogout.bind(this);
+	}
+
+	handleLogout() {
+		AuthService.logout().then(response => {
+			localStorage.removeItem('currentUser');
+			history.push('/');
+		})
+		.catch(err => alert(err))
 	};
 
 	render() {
@@ -27,7 +38,10 @@ class Navigation extends Component {
 						</Link>
 					))}
 				</Nav>
-				<button className="btn" onClick={this.handleLogout} style={{backgroundColor: '#f5d903'}}>Logout</button>
+				{this.props.routes.length ?
+					(<button className="btn" onClick={this.handleLogout} style={{backgroundColor: '#f5d903'}}>Logout</button>)
+					: null
+				}
 			</Navbar>
 		);
 	}

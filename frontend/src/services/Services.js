@@ -1,23 +1,11 @@
 import axios from 'axios'
-
-const API_URL = 'http://localhost:8081'
+import {api_url} from '../assets/variables/Variables'
 
 class Services {
 
-    login(email, password) {
-        return axios.porst(
-            `${API_URL}/user/login`,
-            {
-                user: {
-                    email: email,
-                    password: password
-                }
-            })
+    getAllArticles() {
+        return axios.get(`${api_url}/articles`)
     }
-
-    // login() {
-    //     return axios.get(`${API_URL}/user/login`)
-    // }
 }
 
 export default new Services()
