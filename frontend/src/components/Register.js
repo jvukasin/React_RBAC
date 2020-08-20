@@ -47,7 +47,7 @@ export default function RegisterForm() {
                         <div className="form-group">
                             <label htmlFor="firstName" className="labels">First name:</label>
                             <span className="flexdisplay">
-                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.firstName} id="firstName" name="firstName" type="text"/>
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control width33em" value={values.firstName} id="firstName" name="firstName" type="text"/>
                                 {touched.firstName && errors.firstName ? (
                                     <div className="error">{errors.firstName}</div>
                                 ): null}
@@ -56,7 +56,7 @@ export default function RegisterForm() {
                         <div className="form-group">
                             <label htmlFor="lastName" className="labels">Last name:</label>
                             <span className="flexdisplay">
-                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.lastName} id="lastName" name="lastName" type="text"/>
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control width33em" value={values.lastName} id="lastName" name="lastName" type="text"/>
                                 {touched.lastName && errors.lastName ? (
                                     <div className="error">{errors.lastName}</div>
                                 ): null}
@@ -66,7 +66,7 @@ export default function RegisterForm() {
                         <div className="form-group">
                             <label htmlFor="email" className="labels">Email:</label>
                             <span className="flexdisplay">
-                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.email} id="email" name="email" type="text"/>
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control width33em" value={values.email} id="email" name="email" type="text"/>
                                 {touched.email && errors.email ? (
                                     <div className="error">{errors.email}</div>
                                 ): null}
@@ -75,7 +75,7 @@ export default function RegisterForm() {
                         <div className="form-group">
                             <label htmlFor="username" className="labels">Username:</label>
                             <span className="flexdisplay">
-                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.username} id="username" name="username" type="text"/>
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control width33em" value={values.username} id="username" name="username" type="text"/>
                                 {touched.username && errors.username ? (
                                     <div className="error">{errors.username}</div>
                                 ): null}
@@ -84,7 +84,7 @@ export default function RegisterForm() {
                         <div className="form-group">
                             <label htmlFor="password" className="labels">Password:</label>
                             <span className="flexdisplay">
-                                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.password} id="password" name="password" type="password"/>
+                                <input onChange={handleChange} onBlur={handleBlur} className="form-control width33em" value={values.password} id="password" name="password" type="password"/>
                                 {touched.password && errors.password ? (
                                     <div className="error">{errors.password}</div>
                                 ): null}
@@ -92,7 +92,7 @@ export default function RegisterForm() {
                         </div>
                         
                         <div className="reg-btn">
-                            <button type="submit" className="btn custom-yellow-btn">Log in</button>
+                            <button type="submit" className="btn custom-yellow-btn">Register</button>
                         </div>
                     </div>
                 </form>

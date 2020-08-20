@@ -1,10 +1,17 @@
-import axios from 'axios'
-import {api_url} from '../assets/variables/Variables'
+import axiosRequest from '../util/AxiosApi'
 
 class Services {
 
     getAllArticles() {
-        return axios.get(`${api_url}/articles`)
+        return axiosRequest.get('/articles')
+    }
+
+    getInventory() {
+        return axiosRequest.get('/inventory')
+    }
+
+    createNewProcurement(list) {
+        return axiosRequest.post('/procurements', list)
     }
 }
 

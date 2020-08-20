@@ -3,6 +3,7 @@ package com.master.backend.model;
 import com.master.backend.enums.Enums;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,10 +16,10 @@ public class Procurement {
     private long id;
 
     @Column(name = "time_created", nullable = false)
-    private Date timeCreated;
+    private LocalDateTime timeCreated;
 
-    @Column(name = "time_finished", nullable = false)
-    private Date timeFinished;
+    @Column(name = "time_finished", nullable = true)
+    private LocalDateTime timeFinished;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -45,19 +46,19 @@ public class Procurement {
         this.id = id;
     }
 
-    public Date getTimeCreated() {
+    public LocalDateTime getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(Date timeCreated) {
+    public void setTimeCreated(LocalDateTime timeCreated) {
         this.timeCreated = timeCreated;
     }
 
-    public Date getTimeFinished() {
+    public LocalDateTime getTimeFinished() {
         return timeFinished;
     }
 
-    public void setTimeFinished(Date timeFinished) {
+    public void setTimeFinished(LocalDateTime timeFinished) {
         this.timeFinished = timeFinished;
     }
 

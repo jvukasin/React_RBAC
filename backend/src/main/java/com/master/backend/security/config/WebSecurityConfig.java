@@ -79,6 +79,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers("/users/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/articles/**").permitAll()
+                .antMatchers("/procurements/**").permitAll()
+                .antMatchers("/inventory/**").permitAll()
                 // svaki zahtev mora biti autorizovan
                 .anyRequest().authenticated().and()
                 // presretni svaki zahtev filterom

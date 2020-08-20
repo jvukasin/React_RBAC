@@ -36,7 +36,7 @@ public class AuthController {
 
         UserTokenState uts = authService.login(authenticationRequest, response, device, hr);
         if(uts == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         return ResponseEntity.ok(uts);

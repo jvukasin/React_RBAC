@@ -60,6 +60,14 @@ public class UserService {
         return null;
     }
 
+    public String getCurrentUser(HttpServletRequest request) {
+        String username = getUsernameFromRequest(request);
+        if(username == null) {
+            return "none";
+        }
+        return username;
+    }
+
     public boolean isUserLogged(HttpServletRequest request) {
         String username = getUsernameFromRequest(request);
         if(username == null || username == "") {
@@ -75,5 +83,10 @@ public class UserService {
         }
         String username = tokenUtils.getUsernameFromToken(authToken);
         return username;
+    }
+
+    public User getUserFromRequest(HttpServletRequest request) {
+        String username = getUsernameFromRequest(request);
+        return userRepository.findOneByUsername(username);
     }
 }

@@ -19,6 +19,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "suggestion-react-input-search": "^1.4.0",
     "yup": "^0.29.2"
   },
   "scripts": {

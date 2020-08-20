@@ -1,15 +1,19 @@
-import axios from 'axios'
-import {api_url} from '../assets/variables/Variables'
+import axiosRequest from '../util/AxiosApi'
 
 class UserService {
 
     getUserRoutes() {
-        return axios.get(`${api_url}/users/routes`)
+        return axiosRequest.get('/users/routes')
     }
 
     isUserLoggedIn() {
-        return axios.get(`${api_url}/users/isUserLogged`)
+        return axiosRequest.get('/users/isUserLogged')
     }
+
+    getCurrentUser() {
+        return axiosRequest.get('/users/currentUser')
+    }
+
 }
 
 export default new UserService()

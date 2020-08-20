@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "artical")
-public class Artical {
+@Table(name = "article")
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,13 +23,13 @@ public class Artical {
     @Column(name = "price", nullable = true)
     private double price;
 
-    @OneToMany(mappedBy = "artical", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ProcurementItem> procurementItems;
 
-    @OneToMany(mappedBy = "artical", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Inventory> inventory;
 
-    public Artical() {
+    public Article() {
     }
 
     public long getId() {

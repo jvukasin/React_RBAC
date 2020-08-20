@@ -4,16 +4,16 @@ import DataService from "../services/Services"
 
 import Card from "../layouts/Card";
 
-const thArray = ["ID", "Name", "Code", "Brand", "Price (eur)"];
+const thArray = ["ID", "Name", "Code", "Brand", "Price (eur)", "Quantity"];
 
 class Inventory extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      articles: []
+      inventory: []
     }
-    this.getArticles = this.getArticles.bind(this)
+    this.getInventory = this.getInventory.bind(this)
   }
   
   isActionAllowed = (actionName = "") => {
@@ -22,12 +22,12 @@ class Inventory extends Component {
   }
 
   componentDidMount() {
-    this.getArticles();
+    this.getInventory();
   }
 
-  getArticles() {
-    DataService.getAllArticles().then(response => {
-      this.setState({ articles: response.data})
+  getInventory() {
+    DataService.getInventory().then(response => {
+      this.setState({ inventory: response.data})
     })
   }
 
@@ -56,11 +56,14 @@ class Inventory extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.articles.map((item) => (
+                      {this.state.inventory.map((item) => (
                         <tr key={item.id}>
-                          {Object.values(item).map((val, index) => (
-                            <td key={index}>{val}</td>
-                          ))}
+                          <td>{item.id}</td>
+                          <td>{item.articleDTO.name}</td>
+                          <td>{item.articleDTO.code}</td>
+                          <td>{item.articleDTO.brand}</td>
+                          <td>{item.articleDTO.price}</td>
+                          <td>{item.quantity}</td>
                         </tr>
                       ))}
                     </tbody>

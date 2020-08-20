@@ -31,4 +31,9 @@ public class UserController {
         return new ResponseEntity<>(userService.isUserLogged(request), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> currentUser(HttpServletRequest request) {
+        return new ResponseEntity<>(userService.getCurrentUser(request), HttpStatus.OK);
+    }
+
 }

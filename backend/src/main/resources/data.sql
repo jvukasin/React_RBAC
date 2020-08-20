@@ -1,6 +1,6 @@
 insert into role values (1, 'ROLE_SELLER'), (2, 'ROLE_ADMIN'), (3, 'ROLE_PROCURER');
 
-insert into artical values (1, 'Sony', '013525', 'Sony Bravia LCD TV', 550),
+insert into article values (1, 'Sony', '013525', 'Sony Bravia LCD TV', 550),
 (2, 'Sony', '235013', 'Sony Alpha p50', 630),
 (3, 'Sony', '682057', 'Sony Boombox bluethooth speaker', 290.5),
 (4, 'IPhone', '263568', 'IPhone X Pro', 900),
@@ -23,9 +23,10 @@ insert into inventory values (1, 9, 1),
 (10, 3, 10);
 
 insert into user (type, username, email, first_name, last_name, password, worker_code) values
-('Admin','vule', 'jovic.vukasin@gmail.com', 'Vukasin', 'Jovic', '$2y$10$7zDiRV2lvW6f4vsTuNETxekXQ41AixscHJuRmWvpEL2Ta4SM.2jpu', 'Ox832');
+('Seller','pera', 'petarperic@gmail.com', 'Petar', 'Peric', '$2a$10$vpG.tlnSZyqbUYQZpVelne/pbH5Yphrmvy1XbdH8VmgR7T335z0RG', 'Ox832'),
+('Admin','vule', 'jovic.vukasin@gmail.com', 'Vukasin', 'Jovic', '$2a$10$7pbEvp9b8NVOz/K/oVKOx.OG24I3hJA7BfWy7FjND96zhaVKxlDhG', '31h55');
 
-insert into user_roles values ('vule', 2);
+insert into user_roles values ('vule', 2), ('pera', 1);
 
 insert into react_pages (id, component, icon, title, url) values
 (1, 'Inventory', 'pe-7s-graph', 'Inventory', '/'),
@@ -38,6 +39,6 @@ insert into react_actions (id, action, url, page) values
 (3, 'Create Procurement', 'create-procurement', 'Procurement'),
 (4, 'Add Employee', 'add-employee', 'Employees');
 
-insert into roles_pages values (2, 1),(2, 2),(2, 3);
-insert into roles_actions values (2, 1),(2, 2),(2, 3),(2, 4);
+insert into roles_pages values (2, 1),(2, 2),(2, 3),(1, 1),(1, 2);
+insert into roles_actions values (2, 1),(2, 2),(2, 4), (1, 3);
 

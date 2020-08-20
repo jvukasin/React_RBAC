@@ -14,7 +14,7 @@ public class Inventory {
     private int quantity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Artical artical;
+    private Article article;
 
     public Inventory() {
     }
@@ -35,11 +35,11 @@ public class Inventory {
         this.quantity = quantity;
     }
 
-    public Artical getArtical() {
-        return artical;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setArtical(Artical artical) {
-        this.artical = artical;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 }

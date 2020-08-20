@@ -1,6 +1,6 @@
 package com.master.backend.dto;
 
-import com.master.backend.model.Artical;
+import com.master.backend.model.Article;
 
 public class ArticleDTO {
 
@@ -21,7 +21,7 @@ public class ArticleDTO {
         this.price = price;
     }
 
-    public ArticleDTO(Artical a) {
+    public ArticleDTO(Article a) {
         this(a.getId(), a.getName(), a.getCode(), a.getBrand(), a.getPrice());
     }
 

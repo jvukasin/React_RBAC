@@ -21,6 +21,29 @@
     display: flex;
 }
 
+table.fixed {
+    table-layout:fixed; width:95%;
+}/*Setting the table width is important!*/
+table.fixed td, table.fixed th {
+    overflow:hidden;
+}
+table.fixed td:nth-of-type(1), table.fixed th:nth-of-type(1) {
+    width:10%;
+}
+table.fixed td:nth-of-type(2), table.fixed th:nth-of-type(2) {
+    width:40%;
+}
+table.fixed td:nth-of-type(3), table.fixed th:nth-of-type(3) {
+    width:20%;
+}
+table.fixed td:nth-of-type(4), table.fixed th:nth-of-type(4) {
+    width:25%;
+}
+
+.width-50 {
+    width: 50px !important;
+}
+
 .centerRegister {
     position:fixed;
     height:31em;
@@ -73,7 +96,7 @@
     margin-left: 5px;
 }
 
-.form-control {
+.width33em {
     width: 33em !important;
 }
 

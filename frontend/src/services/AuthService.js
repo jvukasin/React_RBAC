@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {api_url} from '../assets/variables/Variables'
+import axiosRequest from '../util/AxiosApi'
 
 class AuthService {
 
@@ -8,11 +7,11 @@ class AuthService {
             username: username,
             password: password
         }
-        return axios.post(`${api_url}/auth/login`, user)
+        return axiosRequest.post('/auth/login', user)
     }
 
     logout(){
-        return axios.post(`${api_url}/auth/logout`, null)
+        return axiosRequest.post('/auth/logout', null)
     }
 }
 

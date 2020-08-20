@@ -1,7 +1,6 @@
 package com.master.backend.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "procurement_item")
@@ -18,7 +17,7 @@ public class ProcurementItem {
     private Procurement procurement;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Artical artical;
+    private Article article;
 
     public ProcurementItem() {
     }
@@ -47,11 +46,11 @@ public class ProcurementItem {
         this.procurement = procurement;
     }
 
-    public Artical getArtical() {
-        return artical;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setArtical(Artical artical) {
-        this.artical = artical;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 }

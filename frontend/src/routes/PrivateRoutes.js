@@ -5,23 +5,27 @@ import NotFound from '../components/NotFound';
 import Navigation from '../components/Navigation'
 import UserService from '../services/UserService'
 import { Redirect } from 'react-router-dom';
-import {isLoggedIn} from '../helperFunctions/Functions'
 
 function PrivateRoutes() {
 	const match = useRouteMatch('/app');
 	const [allowedRoutes, setAllowedRoutes] = useState([]);
 	const [hasRoutes, setHasRoutes] = useState(false);
 
+	
 	useEffect(() => {
-		if (isLoggedIn()) {
-			UserService.getUserRoutes().then(response => {
-				if(response != null) {
-					setAllowedRoutes(response.data)
-					setHasRoutes(true);
+		UserService.isUserLoggedIn().then(response => {
+				let isit = response.data
+			    if(isit) {
+					UserService.getUserRoutes().then(response => {
+						if(response != null) {
+							setAllowedRoutes(response.data)
+							setHasRoutes(true);
+						}
+					})
+				} else {
+					return <Redirect to="/" />;
 				}
 			})
-		}
-		else return <Redirect to="/" />;
 	}, [])
 
 
