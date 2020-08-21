@@ -23,10 +23,11 @@ insert into inventory values (1, 9, 1),
 (10, 3, 10);
 
 insert into user (type, username, email, first_name, last_name, password, worker_code) values
-('Seller','pera', 'petarperic@gmail.com', 'Petar', 'Peric', '$2a$10$vpG.tlnSZyqbUYQZpVelne/pbH5Yphrmvy1XbdH8VmgR7T335z0RG', 'Ox832'),
-('Admin','vule', 'jovic.vukasin@gmail.com', 'Vukasin', 'Jovic', '$2a$10$7pbEvp9b8NVOz/K/oVKOx.OG24I3hJA7BfWy7FjND96zhaVKxlDhG', '31h55');
+('Seller','seller', 'petarperic@gmail.com', 'Petar', 'Peric', '$2a$10$mpBx/eYSXYSrK1pZnQxB1.QYGEFsz3msbjeAcuhwBfGVyShq5mtKy', 'Ox832'),
+('Procurer','procurer', 'milanmilic@gmail.com', 'Milan', 'Milic', '$2a$10$Lr4iuq.HYXCPrUVg/4L.pOJcZ3vAPWMmpnmgTL/mepRHn/d/is0gO', 'Zk401'),
+('Admin','admin', 'jovic.vukasin@gmail.com', 'Vukasin', 'Jovic', '$2a$10$YGsJD7yJCTUvp9H.pUBWXON3mHDvy.mpzDhs9HSHtjv0qeCsJXAyC', '31h55');
 
-insert into user_roles values ('vule', 2), ('pera', 1);
+insert into user_roles values ('seller', 1), ('admin', 2), ('procurer', 3);
 
 insert into react_pages (id, component, icon, title, url) values
 (1, 'Inventory', 'pe-7s-graph', 'Inventory', '/'),
@@ -37,8 +38,9 @@ insert into react_actions (id, action, url, page) values
 (1, 'Create Role', 'create-role', 'Inventory'),
 (2, 'Delete Role', 'delete-role', 'Inventory'),
 (3, 'Create Procurement', 'create-procurement', 'Procurement'),
-(4, 'Add Employee', 'add-employee', 'Employees');
+(4, 'Add Employee', 'add-employee', 'Employees'),
+(5, 'Complete Procurement', 'complete-procurement', 'Procurement');
 
-insert into roles_pages values (2, 1),(2, 2),(2, 3),(1, 1),(1, 2);
-insert into roles_actions values (2, 1),(2, 2),(2, 4), (1, 3);
+insert into roles_pages values (2, 1),(2, 2),(2, 3),(1, 1),(1, 2),(3, 1),(3, 2);
+insert into roles_actions values (2, 1),(2, 2),(2, 4),(1, 3),(3,5);
 

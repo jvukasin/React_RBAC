@@ -44,6 +44,34 @@ table.fixed td:nth-of-type(4), table.fixed th:nth-of-type(4) {
     width: 50px !important;
 }
 
+.contentCard {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+    padding-right: 35px;
+}
+
+.move-col-right20 {
+    margin-left: 16%;
+}
+
+.large-btn {
+    padding: 10px;
+}
+
+
+.rightContentCard {
+    width: 15%;
+    float:right;
+    margin-right: 25px;
+    margin-top: 7%;
+}
+
+.float-right-btn {
+    float: right;
+    margin-right: 35px;
+}
+
 .centerRegister {
     position:fixed;
     height:31em;

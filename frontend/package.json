@@ -20,6 +20,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "suggestion-react-input-search": "^1.4.0",
+    "sweetalert2": "^9.17.1",
+    "sweetalert2-react-content": "^3.0.3",
     "yup": "^0.29.2"
   },
   "scripts": {

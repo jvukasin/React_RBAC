@@ -1,5 +1,6 @@
 package com.master.backend.controller;
 
+import com.master.backend.dto.ProcurementDTO;
 import com.master.backend.dto.ProcurementItemDTO;
 import com.master.backend.service.ProcurementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class ProcurementController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<ProcurementDTO>> getAllProcurements() {
+        return new ResponseEntity<>(procurService.getAllProcurements(), HttpStatus.OK);
     }
 
 }
