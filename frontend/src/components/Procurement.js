@@ -6,15 +6,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import Card from "../layouts/Card";
 import ModalBody from './NewProcurementModal'
 import ProcurementCard from '../layouts/ProcurementCard'
-
-const ListP = [
-    {id: 1, timeCreated: "01.Jan.2018. 14:05", timeFinished: "01.Jan.2018. 14:05", status: "ORDERED", seller: "Mika", procurer: "Pera", procurementItems:
-    [{ id: 1, name: "Sony nesto", quantity: 5 }, { id: 2, name: "GoPro", quantity: 13 }]
-    },
-    {id: 2, timeCreated: "20.Apr.2019. 17:24", timeFinished: "01.Jan.2018. 14:05", status: "COMPLETED", seller: "Mika", procurer: "Pera", procurementItems: [{
-        id: 2, name: "Sony nesto", quantity: 5
-    }]}
-]
+import Services from '../services/Services'
+import Swal from 'sweetalert2';
 
 class Procurement extends Component {
 
@@ -33,7 +26,9 @@ class Procurement extends Component {
     }
 
     componentDidMount() {
-
+        Services.getAllProcurements().then(response => {
+            this.setState({listP: response.data})
+        })
     }
 
     handleModal() {
@@ -48,8 +43,29 @@ class Procurement extends Component {
         }))
     }
 
+    handleProcurementList = (newElement) => {
+        this.setState(prevState => ({
+            listP: [...prevState.listP, newElement]
+          }))
+    }
+
     changeItemListState(list) {
         this.setState({itemList: list})
+    }
+
+    completeProcurement = (id) => {
+        Services.completeProcurement(id).then(response => {
+            let newProc = response.data
+            let items = [...this.state.listP];
+            items[id-1] = newProc;
+            this.setState({listP: items});
+            Swal.fire({
+                title: 'Success!',
+                text: 'Procurement completed',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
+        })
     }
 
     isActionAllowed = (actionName = "") => {
@@ -61,9 +77,9 @@ class Procurement extends Component {
         var changeItemListState = this.changeItemListState;
         const canComplete = this.isActionAllowed('complete-procurement')
         const items = (this.state.itemList && this.state.itemList.length > 0) ?
-            this.state.itemList.map((item) =>
+            this.state.itemList.map((item, index) =>
             <tr key={item.id}>
-                <td>{item.id}</td>
+                <td>{index+1}</td>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
             </tr>
@@ -75,7 +91,7 @@ class Procurement extends Component {
                         Create new procurement
                     </Modal.Header>
                     <Modal.Body>
-                        <ModalBody handleModal = {() => this.handleModal()}/>
+                        <ModalBody handleModal = {() => this.handleModal()} addProcurement = {this.handleProcurementList}/>
                     </Modal.Body>
                 </Modal>
                 <Container fluid>
@@ -87,7 +103,7 @@ class Procurement extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        {ListP.map((prop, key) => {
+                        {this.state.listP.length > 0 ? this.state.listP.map((prop, key) => {
                             return (
                                 <Col md={6} key={prop.id}>
                                     <Modal show={this.state.modalProcurements} onHide={() => this.handleModalProcurements()} size="md" scrollable={true}>
@@ -116,12 +132,14 @@ class Procurement extends Component {
                                             procurement={prop}
                                             handleModal2={() => this.handleModalProcurements()}
                                             changeItemListState={changeItemListState.bind(this)}
-                                            canComplete={canComplete}/>
+                                            canComplete={canComplete}
+                                            completeProcurement = {this.completeProcurement}
+                                            />
                                         }
                                     />
                                 </Col>
                             )
-                        })}
+                        }) : <h4 style={{marginLeft: "5%"}}>No Procurements</h4>}
                     </Row>
                 </Container>
             </div>

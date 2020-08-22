@@ -15,7 +15,11 @@ class Services {
     }
 
     getAllProcurements() {
-        
+        return axiosRequest.get('/procurements')
+    }
+
+    completeProcurement(id) {
+        return axiosRequest.put('/procurements/complete/'.concat(id), null)
     }
 }
 

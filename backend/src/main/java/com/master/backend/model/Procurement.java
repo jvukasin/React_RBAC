@@ -12,7 +12,7 @@ import java.util.Set;
 public class Procurement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "time_created", nullable = false)

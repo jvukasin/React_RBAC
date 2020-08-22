@@ -5,11 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import Services from '../services/Services'
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
-export default function ModalProcurement({handleModal}) {
+export default function ModalProcurement({handleModal, addProcurement}) {
 
-    const MySwal = withReactContent(Swal)
     const [articles, setArticles] = useState();
     const [ok, setOk] = useState(false);
     const [selected, setSelected] = useState("");
@@ -42,14 +40,13 @@ export default function ModalProcurement({handleModal}) {
             if(response.status !== 201) {
                 alert('Bad request!');
             }
-            MySwal.fire({
-                title: <p>Hello World</p>,
-                onOpen: () => {
-                  // `MySwal` is a subclass of `Swal`
-                  //   with all the same instance & static methods
-                  MySwal.clickConfirm()
-                }
-              })
+            addProcurement(response.data)
+            Swal.fire({
+                title: 'Success!',
+                text: 'New procurement made.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
           })
     }
 

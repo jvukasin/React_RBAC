@@ -63,7 +63,7 @@ table.fixed td:nth-of-type(4), table.fixed th:nth-of-type(4) {
 .rightContentCard {
     width: 15%;
     float:right;
-    margin-right: 25px;
+    margin-right: 35px;
     margin-top: 7%;
 }
 

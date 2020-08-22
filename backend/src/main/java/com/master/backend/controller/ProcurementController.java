@@ -6,10 +6,7 @@ import com.master.backend.service.ProcurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,9 +19,10 @@ public class ProcurementController {
     ProcurementService procurService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> createProcurement(@RequestBody List<ProcurementItemDTO> items, HttpServletRequest request) {
-        if(procurService.createProcurement(items, request)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<ProcurementDTO> createProcurement(@RequestBody List<ProcurementItemDTO> items, HttpServletRequest request) {
+        ProcurementDTO ret = procurService.createProcurement(items, request);
+        if(ret != null) {
+            return new ResponseEntity<>(ret, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -32,6 +30,15 @@ public class ProcurementController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<ProcurementDTO>> getAllProcurements() {
         return new ResponseEntity<>(procurService.getAllProcurements(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/complete/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<ProcurementDTO> getAllProcurements(@PathVariable Long id, HttpServletRequest request) {
+        ProcurementDTO ret = procurService.completeProcurement(id, request);
+        if(ret != null) {
+            return new ResponseEntity<>(ret, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
