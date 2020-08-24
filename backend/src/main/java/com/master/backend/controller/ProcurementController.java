@@ -41,4 +41,9 @@ public class ProcurementController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public ResponseEntity<List<ProcurementDTO>> getUserProcurements(HttpServletRequest request) {
+        return new ResponseEntity<>(procurService.getUserProcurements(request), HttpStatus.OK);
+    }
+
 }

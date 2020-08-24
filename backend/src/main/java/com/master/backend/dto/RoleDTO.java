@@ -1,22 +1,13 @@
 package com.master.backend.dto;
 
-import com.master.backend.model.Temp;
-
-public class TempDTO {
+public class RoleDTO {
 
     private long id;
     private String name;
 
-    public TempDTO() {
-    }
-
-    public TempDTO(long id, String name) {
+    public RoleDTO(long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public TempDTO(Temp t) {
-        this(t.getId(), t.getName());
     }
 
     public long getId() {

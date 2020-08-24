@@ -14,6 +14,31 @@ class UserService {
         return axiosRequest.get('/users/currentUser')
     }
 
+    getUser() {
+        return axiosRequest.get('/users/getUser')
+    }
+
+    getAllUsers() {
+        return axiosRequest.get('/users/getAllUsers')
+    }
+
+    getRoles() {
+        return axiosRequest.get('/users/getRoles')
+    }
+
+    registerNewUser(firstName, lastName, email, username, password, workerCode, roles) {
+        let user = {
+            username: username,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            password: password,
+            workerCode: workerCode,
+            roles: roles
+        }
+        return axiosRequest.post('/users', user)
+    }
+
 }
 
 export default new UserService()

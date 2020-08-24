@@ -5,5 +5,4 @@ export function isLoggedIn() {
         let isit = response.data
         return isit;
     })
-    // return !!localStorage.getItem('currentUser')
 }

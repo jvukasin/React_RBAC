@@ -21,6 +21,10 @@ class Services {
     completeProcurement(id) {
         return axiosRequest.put('/procurements/complete/'.concat(id), null)
     }
+
+    getUserProcurements() {
+        return axiosRequest.get('/procurements/user');
+    }
 }
 
 export default new Services()

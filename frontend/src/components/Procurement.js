@@ -88,7 +88,7 @@ class Procurement extends Component {
             <div className="content contentDiv">
                 <Modal show={this.state.showModal} onHide={() => this.handleModal()} size="lg">
                     <Modal.Header closeButton>
-                        Create new procurement
+                        CREATE NEW PROCUREMENT
                     </Modal.Header>
                     <Modal.Body>
                         <ModalBody handleModal = {() => this.handleModal()} addProcurement = {this.handleProcurementList}/>
@@ -108,7 +108,7 @@ class Procurement extends Component {
                                 <Col md={6} key={prop.id}>
                                     <Modal show={this.state.modalProcurements} onHide={() => this.handleModalProcurements()} size="md" scrollable={true}>
                                     <Modal.Header closeButton>
-                                        Procurement Items
+                                        PROCUREMENT ITEMS
                                     </Modal.Header>
                                     <Modal.Body>
                                         <table className="table">

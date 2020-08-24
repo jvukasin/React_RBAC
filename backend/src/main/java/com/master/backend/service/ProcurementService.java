@@ -33,6 +33,9 @@ public class ProcurementService {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    InventoryService inventoryService;
+
     public ProcurementDTO createProcurement(List<ProcurementItemDTO> items, HttpServletRequest request) {
         User user = userService.getUserFromRequest(request);
         if(user == null) {
@@ -41,7 +44,7 @@ public class ProcurementService {
         LocalDateTime now = LocalDateTime.now();
         Procurement p = new Procurement();
         p.setTimeCreated(now);
-        p.setSeller((Seller) user);
+        p.setSeller(user);
         p.setStatus(Enums.ProcurementStatus.ORDERED);
         Set<ProcurementItem> procItems = new HashSet<>();
         p = procurRepo.save(p);
@@ -93,16 +96,31 @@ public class ProcurementService {
 
     public ProcurementDTO completeProcurement(Long id, HttpServletRequest request) {
         User user = userService.getUserFromRequest(request);
-        if(user == null) {
-            return null;
-        }
+        if(user == null) return null;
         Procurement p = procurRepo.findOneById(id);
+        if(p == null) return null;
         LocalDateTime now = LocalDateTime.now();
         p.setTimeFinished(now);
-        p.setProcurer((Procurer) user);
+        p.setProcurer(user);
         p.setStatus(Enums.ProcurementStatus.COMPLETED);
         procurRepo.save(p);
 
+        inventoryService.updateItems(p.getProcurementItems());
+
         return returnOneProcurementDTO(p);
+    }
+
+    public List<ProcurementDTO> getUserProcurements(HttpServletRequest request) {
+        String username = userService.getUsernameFromRequest(request);
+        if(username == null) {
+            return null;
+        }
+        List<ProcurementDTO> ret = new ArrayList<>();
+        List<Procurement> procurements = procurRepo.findAllForUser(username);
+        for(Procurement p : procurements) {
+            ProcurementDTO dto = returnOneProcurementDTO(p);
+            ret.add(dto);
+        }
+        return ret;
     }
 }

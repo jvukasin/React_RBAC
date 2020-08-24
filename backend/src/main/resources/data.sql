@@ -23,16 +23,18 @@ insert into inventory values (1, 9, 1),
 (10, 3, 10);
 
 insert into user (type, username, email, first_name, last_name, password, worker_code) values
-('Seller','seller', 'petarperic@gmail.com', 'Petar', 'Peric', '$2a$10$mpBx/eYSXYSrK1pZnQxB1.QYGEFsz3msbjeAcuhwBfGVyShq5mtKy', 'Ox832'),
-('Procurer','procurer', 'milanmilic@gmail.com', 'Milan', 'Milic', '$2a$10$Lr4iuq.HYXCPrUVg/4L.pOJcZ3vAPWMmpnmgTL/mepRHn/d/is0gO', 'Zk401'),
-('Admin','admin', 'jovic.vukasin@gmail.com', 'Vukasin', 'Jovic', '$2a$10$YGsJD7yJCTUvp9H.pUBWXON3mHDvy.mpzDhs9HSHtjv0qeCsJXAyC', '31h55');
+('Seller','seller', 'petarperic@gmail.com', 'Petar', 'Peric', '$2a$10$mpBx/eYSXYSrK1pZnQxB1.QYGEFsz3msbjeAcuhwBfGVyShq5mtKy', 'Sx832'),
+('Procurer','procurer', 'milanmilic@gmail.com', 'Milan', 'Milic', '$2a$10$Lr4iuq.HYXCPrUVg/4L.pOJcZ3vAPWMmpnmgTL/mepRHn/d/is0gO', 'Px401'),
+('Procurer','manager', 'lazaar@gmail.com', 'Lazar', 'Lazic', '$2a$10$G2a1Chhusk0zGfOSiZp0P.WcuS3F539lwW0olswgaj4Zh9MsBjp2m', 'Mx669'),
+('Admin','admin', 'jovic.vukasin@gmail.com', 'Vukasin', 'Jovic', '$2a$10$YGsJD7yJCTUvp9H.pUBWXON3mHDvy.mpzDhs9HSHtjv0qeCsJXAyC', 'Axh55');
 
-insert into user_roles values ('seller', 1), ('admin', 2), ('procurer', 3);
+insert into user_roles values ('seller', 1), ('admin', 2), ('procurer', 3), ('manager',1), ('manager',3);
 
 insert into react_pages (id, component, icon, title, url) values
 (1, 'Inventory', 'pe-7s-graph', 'Inventory', '/'),
 (2, 'Procurement', 'pe-7s-note2', 'Procurement', '/procurement'),
-(3, 'Employees', 'pe-7s-note2', 'Employees', '/employees');
+(3, 'Employees', 'pe-7s-note2', 'Employees', '/employees'),
+(4, 'Profile', 'pe-7s-note2', 'Profile', '/profile');
 
 insert into react_actions (id, action, url, page) values
 (1, 'Create Role', 'create-role', 'Inventory'),
@@ -41,6 +43,6 @@ insert into react_actions (id, action, url, page) values
 (4, 'Add Employee', 'add-employee', 'Employees'),
 (5, 'Complete Procurement', 'complete-procurement', 'Procurement');
 
-insert into roles_pages values (2, 1),(2, 2),(2, 3),(1, 1),(1, 2),(3, 1),(3, 2);
+insert into roles_pages values (2, 1),(2, 2),(2, 3),(1, 1),(1, 2),(3, 1),(3, 2),(1,4),(3,4);
 insert into roles_actions values (2, 1),(2, 2),(2, 4),(1, 3),(3,5);
 

@@ -26,10 +26,10 @@ public class Procurement {
     private Enums.ProcurementStatus status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Seller seller;
+    private User seller;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Procurer procurer;
+    private User procurer;
 
     @OneToMany(mappedBy = "procurement", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ProcurementItem> procurementItems;
@@ -70,19 +70,19 @@ public class Procurement {
         this.status = status;
     }
 
-    public Seller getSeller() {
+    public User getSeller() {
         return seller;
     }
 
-    public void setSeller(Seller seller) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 
-    public Procurer getProcurer() {
+    public User getProcurer() {
         return procurer;
     }
 
-    public void setProcurer(Procurer procurer) {
+    public void setProcurer(User procurer) {
         this.procurer = procurer;
     }
 

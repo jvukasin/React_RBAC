@@ -124,6 +124,11 @@ table.fixed td:nth-of-type(4), table.fixed th:nth-of-type(4) {
     margin-left: 5px;
 }
 
+.errorRed {
+    color: red;
+    margin-left: 5px;
+}
+
 .width33em {
     width: 33em !important;
 }

@@ -2,33 +2,65 @@ import React, {Component} from 'react';
 import { Container, Row, Col, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import UserService from '../services/UserService'
+import {Modal} from 'react-bootstrap'
+import ModalUser from './NewUserModal'
 
 import Card from "../layouts/Card";
 
-const thArray = ["ID", "Name", "Edit", "Delete"];
-const tdArray = [
-    ["1", "Data Entry Person", "Edit", "Delete"],
-    ["2", "Data Specialist",  "Edit", "Delete"],
-    ["3", "Study Director",  "Edit", "Delete"],
-    ["4", "Data Manager",  "Edit", "Delete"],
-    ["5", "Monitor",  "Edit", "Delete"]
-];
+const thArray = ["Username", "Name", "Worker ID", "Email", "Role(s)"];
 
 class Employees extends Component {
+
+    constructor() {
+        super()
+        this.state = {
+            showModal: false,
+            userList: []
+        }
+
+        this.handleModal = this.handleModal.bind(this)
+    }
+
+    componentDidMount() {
+        UserService.getAllUsers().then(response => {
+            this.setState({userList: response.data})
+        })
+    }
 
     isActionAllowed = (actionName = "") => {
         let numbb = this.props.allowedActions.map(function(a) { return a.actionUrl; }).indexOf(actionName);
         return (numbb >= 0) ? true : false;
     }
+
+    handleModal() {
+        this.setState(prevState => ({
+            showModal: !prevState.showModal
+        }))
+    }
+
+    handleNewUser = (newUser) => {
+        this.setState(prevState => ({
+            userList: [...prevState.userList, newUser]
+          }))
+    }
     
     render() {
         return (
             <div className="content contentDiv">
+                <Modal show={this.state.showModal} onHide={() => this.handleModal()}>
+                    <Modal.Header closeButton>
+                        ADD NEW EMPLOYEE
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ModalUser handleNewUser = {this.handleNewUser} handleModal = {this.handleModal}/>
+                    </Modal.Body>
+                </Modal>
             <Container fluid>
             <Row>
                 <Col md={12}>  
                 {this.isActionAllowed('add-employee') &&
-                    <button className="btn custom-green-btn" type="button"><FontAwesomeIcon icon={faPlus}/>  Add employee</button>
+                    <button className="btn custom-green-btn" type="button" onClick={() => this.handleModal()}><FontAwesomeIcon icon={faPlus}/>  Add employee</button>
                 }
                 </Col>
                 </Row>
@@ -49,15 +81,15 @@ class Employees extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {tdArray.map((prop, key) => {
-                            return (
-                                <tr key={key}>
-                                {prop.map((prop, key) => {
-                                    return <td key={key}>{prop}</td>;
-                                })}
+                            {this.state.userList.map((item) => (
+                                <tr key={item.username}>
+                                    <td>{item.username}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.workerCode}</td>
+                                    <td>{item.email}</td>
+                                    <td>{item.roles}</td>
                                 </tr>
-                            );
-                            })}
+                            ))}
                         </tbody>
                         </Table>
                     }

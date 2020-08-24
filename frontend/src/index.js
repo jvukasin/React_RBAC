@@ -21,9 +21,7 @@ axios.interceptors.response.use( (response) => {
   });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App />,
   document.getElementById('root')
 );
 
