@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,8 +34,14 @@ public class AuthService {
 
     public UserTokenState login(JwtAuthenticationRequest authenticationRequest, HttpServletResponse response, Device device, HttpServletRequest hr) {
 
-        final Authentication authentication = manager
-                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+        final Authentication authentication;
+        try {
+            authentication = manager
+             .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+
+        } catch (BadCredentialsException b) {
+            return null;
+        }
 
         User user =  (User) authentication.getPrincipal();
         // VRATI DRUGI STATUS KOD

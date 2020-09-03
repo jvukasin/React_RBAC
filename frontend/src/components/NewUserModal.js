@@ -7,7 +7,8 @@ import UserService from '../services/UserService';
 export default function ModalUser({handleNewUser, handleModal}) {
     
     const [roles, setRoles] = useState([])
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState([])
+    const [isSelected, setIsSelected] = useState(false)
 
     useEffect(() => {
         UserService.getRoles().then(response => {
@@ -50,23 +51,27 @@ export default function ModalUser({handleNewUser, handleModal}) {
         },
         validationSchema: RegistrationValidation,
         onSubmit: ({firstName, lastName, email, username, password, workerCode}) => {
-            UserService.registerNewUser(firstName,lastName,email, username, password, workerCode, selected).then(response => {
-                handleNewUser(response.data)
-                handleModal()
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'New user added.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
+            if(selected.length > 0) {
+                UserService.registerNewUser(firstName,lastName,email, username, password, workerCode, selected).then(response => {
+                    handleNewUser(response.data)
+                    handleModal()
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'New user added.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    })
+                }).catch(err => {
+                    Swal.fire({
+                        title: 'Error occured',
+                        text: err,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    })
                 })
-            }).catch(err => {
-                Swal.fire({
-                    title: 'Error occured',
-                    text: err,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-            })
+            } else {
+                setIsSelected(true)
+            }
         }
     })
 
@@ -147,7 +152,7 @@ export default function ModalUser({handleNewUser, handleModal}) {
                 </div>
 
                 <div className="form-group">
-                    <p>Role(s):</p>
+                        <p>Role(s):{isSelected && <span style={{marginLeft: "10px", color: "red"}}>One role must be selected</span>}</p>
                         {roles.map((item) => {
                             return (
                                 <label key={item.id} style={{marginRight: "25px"}}>

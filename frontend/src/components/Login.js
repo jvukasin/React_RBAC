@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useFormik} from 'formik'
 import *  as Yup from 'yup'
 import AuthService from '../services/AuthService'
-import history from '../util/history';
+import history from '../util/history'
+import Swal from 'sweetalert2'
 
 export default function LoginForm() {
+
+    const [badCredentials, setBadCredentials] = useState(false);
 
     const LoginValidation = Yup.object().shape({
         username: Yup
@@ -23,15 +26,28 @@ export default function LoginForm() {
         validationSchema: LoginValidation,
         onSubmit: ({username, password}) => {
             AuthService.login(username, password).then(response => {
+                setBadCredentials(false)
                 localStorage.setItem('currentUser', response.data.accessToken);
                 history.push('/app');
             })
-            .catch(err => { alert(err) })
+            .catch(err => {
+                if(err.response.status === 400) {
+                    setBadCredentials(true)
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Something went wrong... sorry for the inconvenience.',
+                        icon: 'error',
+                        confirmButtonText: 'Try again'
+                    })
+                }
+            })
         }
     })
     return (
         <div>
             <h2 className="formH2">Log in</h2>
+            {badCredentials && <p style={{textAlign: "center", color: "red", paddingTop: "2%", fontSize: "18pt"}}>Bad Credentials!</p>}
             <div className="lineLogin loginCenter">
                 <form onSubmit={handleSubmit} className="formLogin loginCenter">
                     <div className="inputs">
