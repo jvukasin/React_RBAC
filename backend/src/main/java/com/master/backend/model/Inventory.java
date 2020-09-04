@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Inventory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "quantity", nullable = false)

@@ -16,7 +16,7 @@ export default function ModalUser({handleNewUser, handleModal}) {
         })
     }, [])
 
-    const RegistrationValidation = Yup.object().shape({
+    const newUserValidation = Yup.object().shape({
         firstName: Yup
         .string()
         .required('Required'),
@@ -49,7 +49,7 @@ export default function ModalUser({handleNewUser, handleModal}) {
             password: '',
             workerCode: ''
         },
-        validationSchema: RegistrationValidation,
+        validationSchema: newUserValidation,
         onSubmit: ({firstName, lastName, email, username, password, workerCode}) => {
             if(selected.length > 0) {
                 UserService.registerNewUser(firstName,lastName,email, username, password, workerCode, selected).then(response => {

@@ -34,15 +34,17 @@ insert into react_pages (id, component, icon, title, url) values
 (1, 'Inventory', 'pe-7s-graph', 'Inventory', '/'),
 (2, 'Procurement', 'pe-7s-note2', 'Procurement', '/procurement'),
 (3, 'Employees', 'pe-7s-note2', 'Employees', '/employees'),
-(4, 'Profile', 'pe-7s-note2', 'Profile', '/profile');
+(4, 'Profile', 'pe-7s-note2', 'Profile', '/profile'),
+(5, 'Articles', 'pe-7s-note2', 'Articles', '/articles');
 
 insert into react_actions (id, action, url, page) values
-(1, 'Create Role', 'create-role', 'Inventory'),
-(2, 'Delete Role', 'delete-role', 'Inventory'),
+(1, 'Display stats', 'system-stats', 'Inventory'),
+(2, 'Edit Inventory Item', 'edit-inventory', 'Inventory'),
 (3, 'Create Procurement', 'create-procurement', 'Procurement'),
 (4, 'Add Employee', 'add-employee', 'Employees'),
-(5, 'Complete Procurement', 'complete-procurement', 'Procurement');
+(5, 'Complete Procurement', 'complete-procurement', 'Procurement'),
+(6, 'Add Article', 'add-article', 'Articles');
 
-insert into roles_pages values (2, 1),(2, 2),(2, 3),(1, 1),(1, 2),(3, 1),(3, 2),(1,4),(3,4);
-insert into roles_actions values (2, 1),(2, 2),(2, 4),(1, 3),(3,5);
+insert into roles_pages values (2, 1), (2, 2), (2, 3), (2, 5), (1, 1), (1, 2), (1, 4), (3, 1), (3, 2), (3, 4);
+insert into roles_actions values (2, 1), (2, 2), (2, 4), (2, 6), (1, 3), (3, 5);
 

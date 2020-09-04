@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import DataService from "../services/Services"
-
+import StatsCard from "../layouts/StatCard"
 import Card from "../layouts/Card";
-
-const thArray = ["ID", "Name", "Code", "Brand", "Price (eur)", "Quantity"];
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faBoxes, faUsers, faArrowAltCircleRight, faArrowAltCircleLeft, faWarehouse, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
 class Inventory extends Component {
-
+  
   constructor(props) {
     super(props)
     this.state = {
-      inventory: []
+      inventory: [],
+      stats: {}
     }
     this.getInventory = this.getInventory.bind(this)
+    this.getStats = this.getStats.bind(this)
   }
   
   isActionAllowed = (actionName = "") => {
@@ -23,6 +25,7 @@ class Inventory extends Component {
 
   componentDidMount() {
     this.getInventory();
+    this.isActionAllowed('system-stats') && this.getStats()
   }
 
   getInventory() {
@@ -31,14 +34,56 @@ class Inventory extends Component {
     })
   }
 
+  getStats() {
+    DataService.getStats().then(response => {
+      this.setState({stats: response.data})
+    })
+  }
+
   render() {
     return (
       <div className="content contentDiv">
         <Container fluid>
-        <Row>
-          <Col md={12}>
-          </Col>
+          {Object.keys(this.state.stats).length !== 0 &&
+          <Row>
+            <Col lg={3} sm={6}>
+              <StatsCard
+                    bigIcon={<FontAwesomeIcon icon={faBoxes} style={{color:"burlywood"}}/>}
+                    statsText="No. of inventory items"
+                    statsValue={this.state.stats.noOfItems}
+                    statsIcon={<FontAwesomeIcon icon={faWarehouse}/>}
+                    statsIconText="In the warehouse"
+                  />
+            </Col>
+            <Col lg={3} sm={6}>
+              <StatsCard
+                    bigIcon={<FontAwesomeIcon icon={faUsers} style={{color:"#3232ff"}}/>}
+                    statsText="No. of employees"
+                    statsValue={this.state.stats.noOfEmployees}
+                    statsIcon={<FontAwesomeIcon icon={faBuilding}/>}
+                    statsIconText="In the company"
+                  />
+            </Col>
+            <Col lg={3} sm={6}>
+              <StatsCard
+                    bigIcon={<FontAwesomeIcon icon={faArrowAltCircleRight} style={{color:"orange"}}/>}
+                    statsText="Ordered procurements"
+                    statsValue={this.state.stats.orderedProcurements}
+                    statsIcon={<FontAwesomeIcon icon={faCalendar}/>}
+                    statsIconText="From 01.01.2020."
+                  />
+            </Col>
+            <Col lg={3} sm={6}>
+              <StatsCard
+                    bigIcon={<FontAwesomeIcon icon={faArrowAltCircleLeft} style={{color:"green"}}/>}
+                    statsText="Completed procurements"
+                    statsValue={this.state.stats.completedProcurements}
+                    statsIcon={<FontAwesomeIcon icon={faCalendar}/>}
+                    statsIconText="From 01.01.2020."
+                  />
+            </Col>
           </Row>
+          }
           <Row>
             <Col md={12}>
               <Card
@@ -50,9 +95,13 @@ class Inventory extends Component {
                   <Table striped hover>
                     <thead>
                       <tr>
-                        {thArray.map((item, index) => {
-                          return <th key={index}>{item}</th>;
-                        })}
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Brand</th>
+                        <th>Price (eur)</th>
+                        <th>Quantity</th>
+                        {this.isActionAllowed('edit-inventory') && <th>Edit</th> }
                       </tr>
                     </thead>
                     <tbody>
@@ -64,6 +113,7 @@ class Inventory extends Component {
                           <td>{item.articleDTO.brand}</td>
                           <td>{item.articleDTO.price}</td>
                           <td>{item.quantity}</td>
+                          {this.isActionAllowed('edit-inventory') && <td><button className="btn btn-link btn-small-padding">Edit</button></td> }
                         </tr>
                       ))}
                     </tbody>
