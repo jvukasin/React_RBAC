@@ -1,6 +1,5 @@
 package com.master.backend.dto;
 
-import com.master.backend.model.RActions;
 import com.master.backend.model.RPages;
 
 import java.util.ArrayList;
@@ -13,14 +12,16 @@ public class RPagesDTO {
     private String icon;
     private String component;
     private List<RActionsDTO> actions;
+    private List<RPagesDTO> children;
 
-    public RPagesDTO(long id, String url, String title, String icon, String component, List<RActionsDTO> actions) {
+    public RPagesDTO(long id, String url, String title, String icon, String component, List<RActionsDTO> actions, List<RPagesDTO> children) {
         this.id = id;
         this.url = url;
         this.title = title;
         this.icon = icon;
         this.component = component;
         this.actions = actions;
+        this.children = children;
     }
 
     public RPagesDTO(RPages p) {
@@ -28,7 +29,18 @@ public class RPagesDTO {
         this.url = p.getUrl();
         this.title = p.getTitle();
         this.icon = p.getIcon();
-        this.component = p.getComponent();;
+        this.component = p.getComponent();
+        this.children = transformChildrenToDTO(p.getChildren());
+    }
+
+    private List<RPagesDTO> transformChildrenToDTO(List<RPages> children) {
+        ArrayList<RPagesDTO> ret = new ArrayList<>();
+        for(RPages page : children) {
+            RPagesDTO dto = new RPagesDTO(page);
+            dto.setActions(new ArrayList<>());
+            ret.add(dto);
+        }
+        return ret;
     }
 
     public long getId() {
@@ -77,5 +89,13 @@ public class RPagesDTO {
 
     public void setActions(List<RActionsDTO> actions) {
         this.actions = actions;
+    }
+
+    public List<RPagesDTO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<RPagesDTO> children) {
+        this.children = children;
     }
 }

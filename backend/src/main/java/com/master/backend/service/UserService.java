@@ -32,8 +32,8 @@ public class UserService {
         User user = userRepository.findOneByUsername(username);
         if(user != null) {
             List<Role> roles = user.getRoles();
-            Set<RPagesDTO> pages = new LinkedHashSet();
-            Set<RActionsDTO> actions = new LinkedHashSet();
+            ArrayList<RPagesDTO> pages = new ArrayList<>();
+            ArrayList<RActionsDTO> actions = new ArrayList();
             ArrayList<RPages> checkPage = new ArrayList<>();
             ArrayList<RActions> checkActions = new ArrayList<>();
 
@@ -41,14 +41,6 @@ public class UserService {
             for(Role r : roles) {
                 List<RPages> rolePages = r.getPages();
                 List<RActions> roleActions = r.getActions();
-                for(RPages p : rolePages) {
-                    RPagesDTO one = new RPagesDTO(p);
-                    one.setActions(new ArrayList<>());
-                    if(!checkPage.contains(p)) {
-                        checkPage.add(p);
-                        pages.add(one);
-                    }
-                }
                 for(RActions a : roleActions) {
                     RActionsDTO one = new RActionsDTO(a);
                     if(!checkActions.contains(one)) {
@@ -56,13 +48,30 @@ public class UserService {
                         actions.add(one);
                     }
                 }
+
+                for(RPages p : rolePages) {
+                    if(p.isChild()) continue;
+                    RPagesDTO one = new RPagesDTO(p);
+                    one.setActions(new ArrayList<>());
+                    if(!checkPage.contains(p)) {
+                        checkPage.add(p);
+                        pages.add(one);
+                    }
+                }
             }
 
             //add actions to pages
+            //TODO ovde nesto uradi za children
             for(RPagesDTO page : pages) {
                 for(RActionsDTO action : actions) {
                     if(action.getPageTitle().equals(page.getTitle())) {
                         page.getActions().add(action);
+                    } else if (page.getChildren().size() > 0) {
+                        for(RPagesDTO child : page.getChildren()) {
+                            if(action.getPageTitle().equals(child.getTitle())) {
+                                child.getActions().add(action);
+                            }
+                        }
                     }
                 }
             }
@@ -71,6 +80,7 @@ public class UserService {
         }
         return null;
     }
+
 
     public String getCurrentUser(HttpServletRequest request) {
         String username = getUsernameFromRequest(request);

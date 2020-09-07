@@ -129,6 +129,10 @@ table.fixed td:nth-of-type(4), table.fixed th:nth-of-type(4) {
     margin-left: 5px;
 }
 
+.textGrey {
+    color: #3f3e3e !important;
+}
+
 .width33em {
     width: 33em !important;
 }
@@ -354,4 +358,9 @@ width: calc(100% - 260px); }
     margin-top: -15px;
     margin-bottom: -15px;
     margin-left: -15px;
+}
+
+.stayWhite {
+    background-color: white !important;
+    color: 
 }

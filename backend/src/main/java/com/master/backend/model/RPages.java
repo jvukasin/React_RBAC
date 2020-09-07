@@ -23,8 +23,17 @@ public class RPages {
     @Column(name = "component", nullable = false)
     private String component;
 
+    @Column(name = "child")
+    private boolean isChild;
+
     @ManyToMany(mappedBy = "pages", fetch = FetchType.LAZY)
     private List<Role> roles;
+
+    @ManyToMany(cascade =  {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "parent_child_pages",
+            joinColumns = @JoinColumn(name = "parent_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "child_id", referencedColumnName = "id"))
+    protected List<RPages> children;
 
     public RPages() {
     }
@@ -73,4 +82,23 @@ public class RPages {
         this.roles = roles;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public List<RPages> getChildren() {
+        return children;
+    }
+
+    public boolean isChild() {
+        return isChild;
+    }
+
+    public void setChild(boolean child) {
+        isChild = child;
+    }
+
+    public void setChildren(List<RPages> children) {
+        this.children = children;
+    }
 }

@@ -30,12 +30,13 @@ insert into user (type, username, email, first_name, last_name, password, worker
 
 insert into user_roles values ('seller', 1), ('admin', 2), ('procurer', 3), ('manager',1), ('manager',3);
 
-insert into react_pages (id, component, icon, title, url) values
-(1, 'Inventory', 'pe-7s-graph', 'Inventory', '/'),
-(2, 'Procurement', 'pe-7s-note2', 'Procurement', '/procurement'),
-(3, 'Employees', 'pe-7s-note2', 'Employees', '/employees'),
-(4, 'Profile', 'pe-7s-note2', 'Profile', '/profile'),
-(5, 'Articles', 'pe-7s-note2', 'Articles', '/articles');
+insert into react_pages (id, component, icon, title, url, child) values
+(1, 'Inventory', 'pe-7s-graph', 'Inventory', '/', false),
+(2, 'Procurement', 'pe-7s-note2', 'Procurement', '/procurement', false),
+(3, 'Employees', 'pe-7s-note2', 'Employees', '/employees', true),
+(4, 'Profile', 'pe-7s-note2', 'Profile', '/profile', false),
+(5, 'Articles', 'pe-7s-note2', 'Articles', '/articles', true),
+(6, 'Admin', 'pe-7s-note2', 'Admin', '/admin', false);
 
 insert into react_actions (id, action, url, page) values
 (1, 'Display stats', 'system-stats', 'Inventory'),
@@ -45,6 +46,7 @@ insert into react_actions (id, action, url, page) values
 (5, 'Complete Procurement', 'complete-procurement', 'Procurement'),
 (6, 'Add Article', 'add-article', 'Articles');
 
-insert into roles_pages values (2, 1), (2, 2), (2, 3), (2, 5), (1, 1), (1, 2), (1, 4), (3, 1), (3, 2), (3, 4);
+insert into roles_pages values (2, 1), (2, 2), (2, 3), (2, 5), (2, 6), (1, 1), (1, 2), (1, 4), (3, 1), (3, 2), (3, 4);
 insert into roles_actions values (2, 1), (2, 2), (2, 4), (2, 6), (1, 3), (3, 5);
+insert into parent_child_pages values (6, 3), (6, 5);
 

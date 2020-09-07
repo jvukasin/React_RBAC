@@ -36,6 +36,18 @@ function PrivateRoutes() {
 				{allowedRoutes.map((route) => {
 		
 					const Component = Routes[route.component];
+					if(route.children.length > 0) {
+						return (route.children.map( child => {
+							const Component = Routes[child.component];
+							return <Route
+								exact
+								key={child.url}
+								path={`${match.path}${route.url}${child.url}`}
+							>
+								<Component allowedActions={child.actions}/>
+							</Route>
+						}))
+					}
 					return (
 						<Route
 							exact
