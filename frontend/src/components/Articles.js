@@ -5,7 +5,7 @@ import Card from "../layouts/Card";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {Modal} from 'react-bootstrap'
-import ModalBody from './NewArticleModal'
+import ModalBody from './modals/NewArticleModal'
 
 class Articles extends Component {
   

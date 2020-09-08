@@ -1,7 +1,7 @@
 import React from 'react'
 import {useFormik} from 'formik'
 import *  as Yup from 'yup'
-import Services from '../services/Services'
+import Services from '../../services/Services'
 import Swal from 'sweetalert2'
 
 export default function ModalArticle({handleModal, addArticle}) {

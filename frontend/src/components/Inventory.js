@@ -3,6 +3,8 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import DataService from "../services/Services"
 import StatsCard from "../layouts/StatCard"
 import Card from "../layouts/Card";
+import {Modal} from 'react-bootstrap'
+import ModalBody from './modals/EditInventoryModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faBoxes, faUsers, faArrowAltCircleRight, faArrowAltCircleLeft, faWarehouse, faBuilding } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,10 +14,13 @@ class Inventory extends Component {
     super(props)
     this.state = {
       inventory: [],
-      stats: {}
+      stats: {},
+      showModal: false,
+      item: {}
     }
     this.getInventory = this.getInventory.bind(this)
     this.getStats = this.getStats.bind(this)
+    this.handleModal = this.handleModal.bind(this)
   }
   
   isActionAllowed = (actionName = "") => {
@@ -40,9 +45,31 @@ class Inventory extends Component {
     })
   }
 
+  handleModal(data) {
+    this.setState({item: data})
+    this.setState(prevState => ({
+        showModal: !prevState.showModal
+    }))
+  }
+
+  changeQuantity = (data) => {
+    let id = data.id
+    let items = [...this.state.inventory];
+    items[id-1] = data;
+    this.setState({inventory: items});
+  }
+
   render() {
     return (
       <div className="content contentDiv">
+        <Modal show={this.state.showModal} onHide={() => this.handleModal()}>
+            <Modal.Header closeButton>
+                EDIT
+            </Modal.Header>
+            <Modal.Body>
+                <ModalBody handleModal = {() => this.handleModal()} changeQuantity = {this.changeQuantity} item={this.state.item}/>
+            </Modal.Body>
+        </Modal>
         <Container fluid>
           {Object.keys(this.state.stats).length !== 0 &&
           <Row>
@@ -113,7 +140,7 @@ class Inventory extends Component {
                           <td>{item.articleDTO.brand}</td>
                           <td>{item.articleDTO.price}</td>
                           <td>{item.quantity}</td>
-                          {this.isActionAllowed('edit-inventory') && <td><button className="btn btn-link btn-small-padding">Edit</button></td> }
+                          {this.isActionAllowed('edit-inventory') && <td><button className="btn btn-link btn-small-padding" onClick={() => this.handleModal(item)}>Edit</button></td> }
                         </tr>
                       ))}
                     </tbody>

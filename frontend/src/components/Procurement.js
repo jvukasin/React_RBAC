@@ -4,7 +4,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {Modal} from 'react-bootstrap'
 import { Container, Row, Col } from "react-bootstrap";
 import Card from "../layouts/Card";
-import ModalBody from './NewProcurementModal'
+import ModalBody from './modals/NewProcurementModal'
 import ProcurementCard from '../layouts/ProcurementCard'
 import Services from '../services/Services'
 import Swal from 'sweetalert2';

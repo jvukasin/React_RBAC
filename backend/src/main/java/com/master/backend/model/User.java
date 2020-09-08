@@ -38,6 +38,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     protected List<Role> roles;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<UserAppointment> appointments;
+
     public User() {
     }
 
@@ -122,4 +125,11 @@ public class User implements UserDetails {
         this.workerCode = workerCode;
     }
 
+    public List<UserAppointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<UserAppointment> appointments) {
+        this.appointments = appointments;
+    }
 }

@@ -60,4 +60,15 @@ public class UserController {
         return new ResponseEntity<>(ret, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/makeAppointment", method = RequestMethod.POST)
+    public ResponseEntity<UserAppointmentDTO> createAppointment(@RequestBody UserAppointmentDTO app, HttpServletRequest request) {
+        UserAppointmentDTO ret = userService.createAppointment(request, app);
+        if(ret == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(ret, HttpStatus.CREATED);
+    }
+
+
+
 }

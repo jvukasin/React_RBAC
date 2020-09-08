@@ -21,6 +21,25 @@ class Navigation extends Component {
 		.catch(err => alert(err))
 	};
 
+	handleTree = (route) => {
+		if (route.children.length > 0)
+			return <NavDropdown key={route.url} title={route.title} >
+					{route.children.map(child => {
+							if(child.children.length > 0)
+							return this.handleTree(child)
+							return <LinkContainer key={child.url} className="nav-item textGrey" to={`${this.props.path}${route.url}${child.url}`}>
+								<NavDropdown.Item className="stayWhite">{child.title}</NavDropdown.Item>
+								</LinkContainer>
+					})}
+				</NavDropdown>
+		return <Link
+				key={route.url}
+				className="nav-link"
+				to={`${this.props.path}${route.url}`}>
+				{route.title}
+			</Link>
+	}
+
 	render() {
 		return (
 			<Navbar bg="dark" variant="dark" style={{marginLeft: "-15px", marginRight: "-15px", paddingRight: "50px", paddingLeft: "50px"}}>
@@ -30,22 +49,9 @@ class Navigation extends Component {
 					</Link>
 				</Navbar.Brand>
 				<Nav className="mr-auto">
-					{this.props.routes.map((route) => {
-						if (route.children.length > 0)
-							return <NavDropdown key={route.url} title={route.title} >
-									{route.children.map(child => {
-											return <LinkContainer key={child.url} className="nav-item textGrey" to={`${this.props.path}${route.url}${child.url}`}>
-												<NavDropdown.Item className="stayWhite">{child.title}</NavDropdown.Item>
-												</LinkContainer>
-									})}
-								</NavDropdown>
-						return <Link
-								key={route.url}
-								className="nav-link"
-								to={`${this.props.path}${route.url}`}>
-								{route.title}
-							</Link>
-					})}
+					{this.props.routes.map((route) => (
+						this.handleTree(route)
+					))}
 				</Nav>
 				{this.props.routes.length ?
 					(<button className="btn" onClick={this.handleLogout} style={{backgroundColor: '#f5d903'}}>Logout</button>)

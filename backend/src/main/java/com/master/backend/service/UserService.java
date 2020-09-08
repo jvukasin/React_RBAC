@@ -1,11 +1,9 @@
 package com.master.backend.service;
 
 import com.master.backend.dto.*;
-import com.master.backend.model.RActions;
-import com.master.backend.model.RPages;
-import com.master.backend.model.Role;
-import com.master.backend.model.User;
+import com.master.backend.model.*;
 import com.master.backend.repository.RoleRepository;
+import com.master.backend.repository.UserAppointmentRepository;
 import com.master.backend.repository.UserRepository;
 import com.master.backend.security.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,9 @@ public class UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    UserAppointmentRepository appointmentRepository;
 
     public List<RPagesDTO> getRoutes(HttpServletRequest request) {
         String username = getUsernameFromRequest(request);
@@ -61,7 +62,6 @@ public class UserService {
             }
 
             //add actions to pages
-            //TODO ovde nesto uradi za children
             for(RPagesDTO page : pages) {
                 for(RActionsDTO action : actions) {
                     if(action.getPageTitle().equals(page.getTitle())) {
@@ -194,5 +194,21 @@ public class UserService {
         String name = user.getFirstName().concat(" ").concat(user.getLastName());
         String roles = getRoles(user.getRoles());
         return new UserInfoDTO(user.getUsername(), name, user.getEmail(), user.getWorkerCode(), roles);
+    }
+
+    public UserAppointmentDTO createAppointment(HttpServletRequest request, UserAppointmentDTO app) {
+        User user = getUserFromRequest(request);
+        if(user == null) {
+            return null;
+        }
+        UserAppointment ua = new UserAppointment();
+        ua.setDate(app.getDate());
+        ua.setNote(app.getNote());
+        ua.setPerson(app.getPerson());
+        ua.setTime(app.getTime());
+        ua.setActive(true);
+        ua.setUser(user);
+        ua = appointmentRepository.save(ua);
+        return new UserAppointmentDTO(ua.getId(), ua.getPerson(), ua.getDate(), ua.getTime(), ua.getNote());
     }
 }

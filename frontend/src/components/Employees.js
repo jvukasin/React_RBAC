@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import UserService from '../services/UserService'
 import {Modal} from 'react-bootstrap'
-import ModalUser from './NewUserModal'
+import ModalUser from './modals/NewUserModal'
 
 import Card from "../layouts/Card";
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import {useFormik} from 'formik'
 import *  as Yup from 'yup'
-import UserService from '../services/UserService';
+import UserService from '../../services/UserService';
 
 export default function ModalUser({handleNewUser, handleModal}) {
     

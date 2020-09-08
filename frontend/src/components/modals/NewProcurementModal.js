@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import SuggestionInputSearch from 'suggestion-react-input-search'; 
-import DataService from "../services/Services"
+import DataService from "../../services/Services"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import Services from '../services/Services'
+import Services from '../../services/Services'
 import Swal from 'sweetalert2'
 
 export default function ModalProcurement({handleModal, addProcurement}) {

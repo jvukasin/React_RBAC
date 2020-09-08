@@ -44,9 +44,11 @@ insert into react_actions (id, action, url, page) values
 (3, 'Create Procurement', 'create-procurement', 'Procurement'),
 (4, 'Add Employee', 'add-employee', 'Employees'),
 (5, 'Complete Procurement', 'complete-procurement', 'Procurement'),
-(6, 'Add Article', 'add-article', 'Articles');
+(6, 'Add Article', 'add-article', 'Articles'),
+(7, 'Show My Procurements', 'my-procurements', 'Profile');
 
-insert into roles_pages values (2, 1), (2, 2), (2, 3), (2, 5), (2, 6), (1, 1), (1, 2), (1, 4), (3, 1), (3, 2), (3, 4);
-insert into roles_actions values (2, 1), (2, 2), (2, 4), (2, 6), (1, 3), (3, 5);
+
+insert into roles_pages values (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (1, 1), (1, 2), (1, 4), (3, 1), (3, 2), (3, 4);
+insert into roles_actions values (2, 1), (2, 2), (2, 4), (2, 6), (1, 3), (1, 7), (3, 5), (3, 7);
 insert into parent_child_pages values (6, 3), (6, 5);
 

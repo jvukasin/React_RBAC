@@ -40,6 +40,21 @@ class Services {
         }
         return axiosRequest.post('/articles', art)
     }
+
+    setQuantity(item) {
+        return axiosRequest.put('/inventory/changeItem', item)
+    }
+
+    scheduleAppointment(person, date, note, time) {
+        var app = {
+            id: 0,
+            person: person,
+            date: date,
+            time: time,
+            note: note
+        }
+        return axiosRequest.post('/users/makeAppointment', app)
+    }
 }
 
 export default new Services()

@@ -40,4 +40,11 @@ public class InventoryService {
             inventRepo.save(i);
         }
     }
+
+    public InventoryDTO changeItem(InventoryDTO dto) {
+        Inventory i = inventRepo.findOneByArticle(dto.getArticleDTO().getId());
+        i.setQuantity(dto.getQuantity());
+        inventRepo.save(i);
+        return dto;
+    }
 }
