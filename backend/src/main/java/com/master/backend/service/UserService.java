@@ -11,6 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -208,6 +211,38 @@ public class UserService {
         ua.setTime(app.getTime());
         ua.setActive(true);
         ua.setUser(user);
+        ua = appointmentRepository.save(ua);
+        return new UserAppointmentDTO(ua.getId(), ua.getPerson(), ua.getDate(), ua.getTime(), ua.getNote());
+    }
+
+    public UserAppointmentDTO getAppointment(HttpServletRequest request) throws ParseException {
+        User user = getUserFromRequest(request);
+        UserAppointmentDTO ret = null;
+        List<UserAppointment> list = user.getAppointments();
+        for(UserAppointment a : list) {
+            if (a.isActive()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date todayDate = new Date();
+                Date appDate = sdf.parse(a.getDate());
+                String ss = sdf.format(todayDate);
+                Date today = sdf.parse(ss);
+                if(appDate.compareTo(today) < 0) {
+                    a.setActive(false);
+                    appointmentRepository.save(a);
+                    return ret;
+                }
+                return new UserAppointmentDTO(a.getId(),a.getPerson(), a.getDate(), a.getTime(), a.getNote());
+            }
+        }
+        return ret;
+    }
+
+    public UserAppointmentDTO changeAppointment(HttpServletRequest request, UserAppointmentDTO app) {
+        UserAppointment ua = appointmentRepository.findOneById(app.getId());
+        ua.setTime(app.getTime());
+        ua.setDate(app.getDate());
+        ua.setPerson(app.getPerson());
+        ua.setNote(app.getNote());
         ua = appointmentRepository.save(ua);
         return new UserAppointmentDTO(ua.getId(), ua.getPerson(), ua.getDate(), ua.getTime(), ua.getNote());
     }

@@ -55,6 +55,17 @@ class Services {
         }
         return axiosRequest.post('/users/makeAppointment', app)
     }
+
+    changeAppointment(id, person, date, note, time) {
+        var app = {
+            id: id,
+            person: person,
+            date: date,
+            time: time,
+            note: note
+        }
+        return axiosRequest.put('/users/changeAppointment', app)
+    }
 }
 
 export default new Services()

@@ -39,6 +39,10 @@ class UserService {
         return axiosRequest.post('/users', user)
     }
 
+    getAppointment() {
+        return axiosRequest.get('/users/getAppointment')
+    }
+
 }
 
 export default new UserService()

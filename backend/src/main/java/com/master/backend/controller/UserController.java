@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -69,6 +70,15 @@ public class UserController {
         return new ResponseEntity<>(ret, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/getAppointment", method = RequestMethod.GET)
+    public ResponseEntity<UserAppointmentDTO> getAppointment(HttpServletRequest request) throws ParseException {
+        return new ResponseEntity<>(userService.getAppointment(request), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/changeAppointment", method = RequestMethod.PUT)
+    public ResponseEntity<UserAppointmentDTO> changeAppointment(@RequestBody UserAppointmentDTO app, HttpServletRequest request) {
+        return new ResponseEntity<>(userService.changeAppointment(request, app), HttpStatus.OK);
+    }
 
 
 }

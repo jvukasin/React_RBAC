@@ -3,11 +3,11 @@ import Swal from 'sweetalert2'
 import {useFormik} from 'formik'
 import *  as Yup from 'yup'
 import Select from "react-select"
-import Services from '../../services/Services';
+import Services from '../../services/Services'
 
-export default function AppointmentModal({handleAppointment, actions, handleModal}) {
+export default function EditAppointmentModal({handleAppointment, appointment, actions, handleModal}) {
 
-    const [selectedTime, setSelectedTime] = useState({})
+    const [selectedTime, setSelectedTime] = useState({ label: appointment.time, value:  appointment.time})
 
     const appointmentValidation = Yup.object().shape({
         person: Yup
@@ -42,19 +42,19 @@ export default function AppointmentModal({handleAppointment, actions, handleModa
 
     const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
         initialValues: {
-            person: '',
-            date: '',
-            note: ''
+            person: appointment.person,
+            date: appointment.date,
+            note: appointment.note
         },
         validationSchema: appointmentValidation,
         onSubmit: ({person, date, note}) => {
             if(selectedTime != null) {
-                Services.scheduleAppointment(person, date, note, selectedTime.value).then(response => {
+                Services.changeAppointment(appointment.id, person, date, note, selectedTime.value).then(response => {
                     handleAppointment(response.data)
                     handleModal()
                     Swal.fire({
                         title: 'Success!',
-                        text: 'Appointment sent',
+                        text: 'Appointment changed',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     })
@@ -69,6 +69,40 @@ export default function AppointmentModal({handleAppointment, actions, handleModa
             }
         }
     })
+
+    const dateEditable = isActionAllowed('change-hr-date') ?
+        (<div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <span className="flexdisplay">
+                <input onChange={handleChange} onBlur={handleBlur} className="form-control" value={values.date} id="date" name="date" type="date"/>
+                {touched.date && errors.date ? (
+                    <div className="errorRed">{errors.date}</div>
+                ): null}
+            </span>
+        </div>) :
+        (<div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <span className="flexdisplay">
+                <input onChange={handleChange} onBlur={handleBlur} className="form-control" disabled value={values.date} id="date" name="date" type="date"/>
+            </span>
+        </div>);
+
+    const timeEditable = isActionAllowed('change-hr-time') ?
+        (<div className="form-group">
+            <label htmlFor="time">Time:</label>
+            <Select options={timeOptions} placeholder="Select time" value={selectedTime} onChange={selectedOption => {
+            handleTimeChange(selectedOption);
+            handleChange("time");
+        }}/>
+        </div>) :
+        (<div className="form-group">
+            <label htmlFor="time">Time:</label>
+            <Select options={timeOptions} isDisabled={timeOptions} placeholder="Select time" value={selectedTime} onChange={selectedOption => {
+            handleTimeChange(selectedOption);
+            handleChange("time");
+        }}/>
+        </div>)
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -85,23 +119,10 @@ export default function AppointmentModal({handleAppointment, actions, handleModa
                     </span>
                 </div>
                 }
-                <div className="form-group">
-                    <label htmlFor="date">Date:</label>
-                    <span className="flexdisplay">
-                        <input onChange={handleChange} onBlur={handleBlur} className="form-control" data-date-format="DD MM YYYY" value={values.date} id="date" name="date" type="date"/>
-                        {touched.date && errors.date ? (
-                            <div className="errorRed">{errors.date}</div>
-                        ): null}
-                    </span>
-                </div>
+                
+                {dateEditable}
 
-                <div className="form-group">
-                    <label htmlFor="time">Time:</label>
-                    <Select options={timeOptions} placeholder="Select time" value={selectedTime} onChange={selectedOption => {
-                    handleTimeChange(selectedOption);
-                    handleChange("time");
-                  }}/>
-                </div>
+                {timeEditable}
 
                 <div className="form-group">
                     <label htmlFor="note">Note:</label>
@@ -114,7 +135,7 @@ export default function AppointmentModal({handleAppointment, actions, handleModa
                 </div>
                 
                 <div>
-                    <button type="submit" className="btn btn-warning float-right-btn">schedule</button>
+                    <button type="submit" className="btn btn-warning float-right-btn">change</button>
                 </div>
             </div>
         </form>

@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import UserService from '../services/UserService'
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap"
 import Service from '../services/Services'
 import {Modal} from 'react-bootstrap'
 import ModalBody from '../components/modals/AppointmentModal'
 import Card from "../layouts/Card";
+import ModalEdit from "../components/modals/EditAppointmentModal"
 import ProcurementCard from '../layouts/ProcurementCard'
+import Moment from 'moment'
 
 export default function Profile({allowedActions}) {
 
@@ -15,6 +17,7 @@ export default function Profile({allowedActions}) {
     const [showModalHR, setShowModalHR] = useState(false);
     const [itemList, setItemList] = useState();
     const [appointment, setAppointment] = useState({});
+    const [showEditModalHR, setShowEditModalHR] = useState(false);
 
     useEffect(() => {
         UserService.getUser().then(response => {
@@ -22,6 +25,9 @@ export default function Profile({allowedActions}) {
         })
         Service.getUserProcurements().then(response => {
             setProcurements(response.data);
+        })
+        UserService.getAppointment().then(response => {
+            setAppointment(response.data)
         })
     }, [])
 
@@ -41,6 +47,13 @@ export default function Profile({allowedActions}) {
             setShowModalHR(prevState => !prevState)
         )
     }
+
+    const handleEditModalHR = () => {
+        return (
+            setShowEditModalHR(prevState => !prevState)
+        )
+    }
+
 
     const changeItemListState = (list) => {
         setItemList(list)
@@ -69,21 +82,30 @@ export default function Profile({allowedActions}) {
                     <ModalBody handleAppointment = {handleAppointment} actions={allowedActions} handleModal = {handleModalHR}/>
                 </Modal.Body>
             </Modal>
+            <Modal show={showEditModalHR} onHide={() => handleEditModalHR()}>
+                <Modal.Header closeButton>
+                    CHANGE APPOINTMENT
+                </Modal.Header>
+                <Modal.Body>
+                    <ModalEdit handleAppointment = {handleAppointment} appointment={appointment} actions={allowedActions} handleModal = {handleEditModalHR}/>
+                </Modal.Body>
+            </Modal>
             <div style={{marginLeft: "5%", marginRight: "5%", marginTop: "3%"}}>
                 {user && 
                 <div style={{marginBottom: "4%"}}>
                     <div className="row">
-                    <div className="col-lg-9">
+                    <div className="col-sm-8">
                         <h2>{user.name}</h2>
+                        {console.log()}
                     </div>
-                    {Object.keys(appointment).length == 0 ?
-                        (<div className="col-lg-3">
+                    {Object.keys(appointment).length === 0 ?
+                        (<div className="col-sm-4">
                             <button className="btn btn-primary" onClick={() => handleModalHR()}>Make HR appointment</button>
                         </div>)
                         :
-                        (<div className="col-lg-3">
-                            Scheduled appointment: <span style={{marginLeft: "3%"}}><button className="btn btn-link">Change</button></span><br/>
-                            Date: {appointment.date} <br/> Time: {appointment.time}
+                        (<div className="col-sm-4">
+                            Scheduled appointment: <span style={{marginLeft: "3%"}}><button className="btn btn-link" onClick={() => handleEditModalHR()}>Change</button></span><br/>
+                            Date: {Moment(appointment.date).format('DD.MM.YYYY')} <br/> Time: {appointment.time}
                         </div>)
                     }
                     
