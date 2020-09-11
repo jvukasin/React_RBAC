@@ -48,7 +48,8 @@ insert into react_actions (id, action, url, page) values
 (7, 'Show My Procurements', 'my-procurements', 'Profile'),
 (8, 'Set HR Person', 'hr-person', 'Profile'),
 (9, 'Change Date', 'change-hr-date', 'Profile'),
-(10, 'Change Time', 'change-hr-time', 'Profile');
+(10, 'Change Time', 'change-hr-time', 'Profile'),
+(11, 'Change Time', 'change-hr-time', 'Test1');
 
 
 insert into roles_pages values (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (1, 1), (1, 2), (1, 4), (3, 1), (3, 2), (3, 4);

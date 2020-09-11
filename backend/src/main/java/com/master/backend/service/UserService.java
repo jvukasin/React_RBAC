@@ -66,22 +66,24 @@ public class UserService {
 
             //add actions to pages
             for(RPagesDTO page : pages) {
-                for(RActionsDTO action : actions) {
-                    if(action.getPageTitle().equals(page.getTitle())) {
-                        page.getActions().add(action);
-                    } else if (page.getChildren().size() > 0) {
-                        for(RPagesDTO child : page.getChildren()) {
-                            if(action.getPageTitle().equals(child.getTitle())) {
-                                child.getActions().add(action);
-                            }
-                        }
-                    }
+                for (RActionsDTO action : actions) {
+                    addActionsToPages(page, action);
                 }
             }
 
             return new ArrayList<>(pages);
         }
         return null;
+    }
+
+    private void addActionsToPages(RPagesDTO page, RActionsDTO action) {
+        if(action.getPageTitle().equals(page.getTitle())) {
+            page.getActions().add(action);
+        } else if (page.getChildren().size() > 0) {
+            for(RPagesDTO child : page.getChildren()) {
+                addActionsToPages(child, action);
+            }
+        }
     }
 
 
