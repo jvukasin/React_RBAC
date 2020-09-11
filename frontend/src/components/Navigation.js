@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Dropdown} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from '../util/history';
@@ -10,7 +10,9 @@ class Navigation extends Component {
 	constructor() {
 		super()
 
-		this.handleLogout = this.handleLogout.bind(this);
+		this.handleLogout = this.handleLogout.bind(this)
+		this.handleTree = this.handleTree.bind(this)
+		this.handleSubTree = this.handleSubTree.bind(this)
 	}
 
 	handleLogout() {
@@ -21,23 +23,32 @@ class Navigation extends Component {
 		.catch(err => alert(err))
 	};
 
-	handleTree = (route) => {
-		if (route.children.length > 0)
-			return <NavDropdown key={route.url} title={route.title} >
-					{route.children.map(child => {
-							if(child.children.length > 0)
-							return this.handleTree(child)
-							return <LinkContainer key={child.url} className="nav-item textGrey" to={`${this.props.path}${route.url}${child.url}`}>
-								<NavDropdown.Item className="stayWhite">{child.title}</NavDropdown.Item>
-								</LinkContainer>
-					})}
-				</NavDropdown>
-		return <Link
-				key={route.url}
-				className="nav-link"
-				to={`${this.props.path}${route.url}`}>
-				{route.title}
-			</Link>
+	handleSubTree(parent, route) {
+		var completeRoute = parent.url + route.url
+		return <Dropdown key={route.url} className="dropright">
+				<Dropdown.Toggle as={Link} className="nav-link textGrey">
+					{route.title}
+				</Dropdown.Toggle>
+				<Dropdown.Menu>
+				{route.children.map(child => {
+						if(child.children.length > 0)
+							return this.handleSubTree(route, child)
+						return <LinkContainer key={child.url} className="nav-item textGrey" to={`${this.props.path}${completeRoute}${child.url}`}>
+								<Dropdown.Item className="stayWhite">{child.title}</Dropdown.Item>
+							</LinkContainer>
+				})}
+				</Dropdown.Menu>
+			</Dropdown>
+	}
+
+	handleTree(parent, route) {
+		if (route.children.length > 0) {
+			return this.handleSubTree(parent, route)
+		} else {
+			return <LinkContainer key={route.url} className="nav-item textGrey" to={`${this.props.path}${parent.url}${route.url}`}>
+				<NavDropdown.Item as={Link} className="stayWhite">{route.title}</NavDropdown.Item>
+				</LinkContainer>
+		}
 	}
 
 	render() {
@@ -49,9 +60,21 @@ class Navigation extends Component {
 					</Link>
 				</Navbar.Brand>
 				<Nav className="mr-auto">
-					{this.props.routes.map((route) => (
-						this.handleTree(route)
-					))}
+					{this.props.routes.map((route) => {
+						return route.children.length > 0 ?
+						<NavDropdown key={route.url} title={route.title} color="black">
+							{route.children.map(child => {
+								return this.handleTree(route, child)
+							})}
+						</NavDropdown> :
+						<Link
+							key={route.url}
+							className="nav-link"
+							to={`${this.props.path}${route.url}`}>
+							{route.title}
+						</Link>
+						}
+					)}
 				</Nav>
 				{this.props.routes.length ?
 					(<button className="btn" onClick={this.handleLogout} style={{backgroundColor: '#f5d903'}}>Logout</button>)

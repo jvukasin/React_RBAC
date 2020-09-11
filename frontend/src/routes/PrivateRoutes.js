@@ -28,6 +28,22 @@ function PrivateRoutes() {
 			})
 	}, [])
 
+	const handleChild = (parent, route, url) => { //admin, employees ||| employees, test1
+		const Component = Routes[route.component];
+		return route.children.length > 0 ?
+		route.children.map((child) => {
+			const newUrl = url + child.url;
+			return handleChild(route, child, newUrl)
+		})
+		 :
+		<Route
+			exact
+			key={route.url}
+			path={`${match.path}${url}`}
+		>
+			<Component allowedActions={route.actions}/>
+		</Route>
+	}
 
 	if({hasRoutes}) {
 		return (<Fragment>
@@ -35,19 +51,13 @@ function PrivateRoutes() {
 			<Switch>
 				{allowedRoutes.map((route) => {
 		
-					const Component = Routes[route.component];
 					if(route.children.length > 0) {
 						return (route.children.map( child => {
-							const Component = Routes[child.component];
-							return <Route
-								exact
-								key={child.url}
-								path={`${match.path}${route.url}${child.url}`}
-							>
-								<Component allowedActions={child.actions}/>
-							</Route>
+							var newUrl = route.url + child.url;
+							return handleChild(route, child, newUrl)
 						}))
 					}
+					const Component = Routes[route.component];
 					return (
 						<Route
 							exact
