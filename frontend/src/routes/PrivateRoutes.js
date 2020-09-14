@@ -28,7 +28,7 @@ function PrivateRoutes() {
 			})
 	}, [])
 
-	const handleChild = (parent, route, url) => { //admin, employees ||| employees, test1
+	const handleChild = (parent, route, url) => {
 		const Component = Routes[route.component];
 		return route.children.length > 0 ?
 		route.children.map((child) => {
